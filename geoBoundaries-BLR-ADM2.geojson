@@ -20342,7 +20342,8 @@
         "econom-3": "Показатель-3",
         "econom-4": "Показатель-4",
         "econom-5": "Показатель-5",
-        "econom-6": "Показатель-6"
+        "econom-6": "Показатель-6",
+        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html"
       },
       "geometry": {
         "type": "Polygon",

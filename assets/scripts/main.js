@@ -47,7 +47,15 @@ const closeBtn = document.querySelector('.close');
 function showModal(properties) {
     document.getElementById('modalTitle').textContent = properties.shapeName;
 
-    // Собираем экономические показатели
+    // Фон в header
+    const modalHeader = document.querySelector(".modal-header");
+    if (properties.imgRegion) {
+        modalHeader.style.backgroundImage = `url('${properties.imgRegion}')`;
+    } else {
+        modalHeader.style.backgroundImage = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+    }
+
+    // Экономические показатели
     const indicators = Object.keys(properties)
         .filter(key => key.startsWith("econom-"))
         .map(key => `
@@ -58,10 +66,25 @@ function showModal(properties) {
         `)
         .join("");
 
-    document.getElementById('modalInfo').innerHTML = indicators;
+    document.getElementById('modalInfo').innerHTML = `
+        ${indicators}
+        <div class="description">
+            ${properties.regionInfo || "Нет дополнительной информации."}
+        </div>
+    `;
+
+    // Кнопка-ссылка
+    const footer = document.getElementById("modalFooter");
+    if (properties.linkReg) {
+        footer.innerHTML = `<a href="${properties.linkReg}" target="_blank">Подробнее</a>`;
+    } else {
+        footer.innerHTML = "";
+    }
 
     modal.style.display = "block";
 }
+
+
 
 // Вывод справа при наведении
 function updateInfoPanel(props) {
