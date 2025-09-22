@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Карта районов Беларуси</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+    #map {
+      flex: 1;
+    }
+    #info {
+      width: 300px;
+      padding: 20px;
+      border-left: 1px solid #ccc;
+      background: #fafafa;
+      overflow-y: auto;
+    }
+    #info h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="info">
+    <h2>Информация</h2>
+    <p>Наведите на район на карте, чтобы увидеть подробности.</p>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="./assets/scripts/main.js"></script>
+</body>
+</html>

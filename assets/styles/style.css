@@ -1,0 +1,41 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  margin: 0; /* убрал отступы */
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+svg {
+  width: 600px;
+  height: auto;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+.district {
+  fill: #e0e0e0;
+  stroke: #333;
+  stroke-width: 1;
+  transition: fill 0.3s, stroke 0.3s;
+  cursor: pointer;
+}
+
+.district:hover {
+  fill: #90caf9;
+  stroke: #1976d2;
+}
+
+.info-box {
+  width: 300px;
+  min-height: 150px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 14px;
+  line-height: 1.5;
+}
