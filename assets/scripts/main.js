@@ -3,7 +3,8 @@ const map = L.map('map', {
     zoomControl: false,
     scrollWheelZoom: false,
     doubleClickZoom: false,
-    dragging: false
+    dragging: false,
+    attributionControl: false
 }).setView([53.9, 27.5667], 7);
 
 // Базовый слой карты
