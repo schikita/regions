@@ -9,7 +9,7 @@ const map = L.map('map', {
 // Базовый слой карты
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
-    attribution: '© OpenStreetMap contributors'
+    attribution: ''
 }).addTo(map);
 
 let geojsonLayer;
