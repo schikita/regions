@@ -12,7 +12,17 @@
         "shapeISO": "",
         "shapeID": "67162791B87321103764300",
         "shapeGroup": "BLR",
-        "shapeType": "ADM2"
+        "shapeType": "ADM2",
+        "imgRegion": "./assets/img/city/jlobin.jpg",
+        "regionInfo": "Краткая справка",
+        "econom-1": "Показатель-1",
+        "econom-2": "Показатель-2",
+        "econom-3": "Показатель-3",
+        "econom-4": "Показатель-4",
+        "econom-5": "Показатель-5",
+        "econom-6": "Показатель-6",
+        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html",
+        "regionGroup": "Гомельская область"
       },
       "geometry": {
         "type": "Polygon",
@@ -452,7 +462,17 @@
         "shapeISO": "",
         "shapeID": "67162791B85815486219336",
         "shapeGroup": "BLR",
-        "shapeType": "ADM2"
+        "shapeType": "ADM2",
+        "imgRegion": "./assets/img/city/vitebsk.jpg",
+        "regionInfo": "Краткая справка",
+        "econom-1": "Показатель-1",
+        "econom-2": "Показатель-2",
+        "econom-3": "Показатель-3",
+        "econom-4": "Показатель-4",
+        "econom-5": "Показатель-5",
+        "econom-6": "Показатель-6",
+        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html",
+        "regionGroup": "Витебская область"
       },
       "geometry": {
         "type": "Polygon",
@@ -1112,7 +1132,17 @@
         "shapeISO": "",
         "shapeID": "67162791B13547290723272",
         "shapeGroup": "BLR",
-        "shapeType": "ADM2"
+        "shapeType": "ADM2",
+        "imgRegion": "./assets/img/city/hrodno.jpg",
+        "regionInfo": "Краткая справка",
+        "econom-1": "Показатель-1",
+        "econom-2": "Показатель-2",
+        "econom-3": "Показатель-3",
+        "econom-4": "Показатель-4",
+        "econom-5": "Показатель-5",
+        "econom-6": "Показатель-6",
+        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html",
+        "regionGroup": "Гродненская область"
       },
       "geometry": {
         "type": "Polygon",
@@ -1491,7 +1521,17 @@
         "shapeISO": "",
         "shapeID": "67162791B30498032594927",
         "shapeGroup": "BLR",
-        "shapeType": "ADM2"
+        "shapeType": "ADM2",
+        "imgRegion": "./assets/img/city/brest.jpg",
+        "regionInfo": "Краткая справка",
+        "econom-1": "Показатель-1",
+        "econom-2": "Показатель-2",
+        "econom-3": "Показатель-3",
+        "econom-4": "Показатель-4",
+        "econom-5": "Показатель-5",
+        "econom-6": "Показатель-6",
+        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html",
+        "regionGroup": "Брестская область"
       },
       "geometry": {
         "type": "Polygon",
@@ -2007,7 +2047,17 @@
         "shapeISO": "",
         "shapeID": "67162791B64614066939299",
         "shapeGroup": "BLR",
-        "shapeType": "ADM2"
+        "shapeType": "ADM2",
+        "imgRegion": "./assets/img/city/bihov.jpg",
+        "regionInfo": "Краткая справка",
+        "econom-1": "Показатель-1",
+        "econom-2": "Показатель-2",
+        "econom-3": "Показатель-3",
+        "econom-4": "Показатель-4",
+        "econom-5": "Показатель-5",
+        "econom-6": "Показатель-6",
+        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html",
+        "regionGroup": "Могилевская область"
       },
       "geometry": {
         "type": "Polygon",
@@ -2452,7 +2502,17 @@
         "shapeISO": "",
         "shapeID": "67162791B81421428715601",
         "shapeGroup": "BLR",
-        "shapeType": "ADM2"
+        "shapeType": "ADM2",
+                "imgRegion": "./assets/img/city/bihov.jpg",
+        "regionInfo": "Краткая справка",
+        "econom-1": "Показатель-1",
+        "econom-2": "Показатель-2",
+        "econom-3": "Показатель-3",
+        "econom-4": "Показатель-4",
+        "econom-5": "Показатель-5",
+        "econom-6": "Показатель-6",
+        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html",
+        "regionGroup": "Минская область"
       },
       "geometry": {
         "type": "Polygon",
@@ -2882,7 +2942,17 @@
         "shapeISO": "",
         "shapeID": "67162791B57724394311820",
         "shapeGroup": "BLR",
-        "shapeType": "ADM2"
+        "shapeType": "ADM2",
+                "imgRegion": "./assets/img/city/minsk.jpg",
+        "regionInfo": "Краткая справка",
+        "econom-1": "Показатель-1",
+        "econom-2": "Показатель-2",
+        "econom-3": "Показатель-3",
+        "econom-4": "Показатель-4",
+        "econom-5": "Показатель-5",
+        "econom-6": "Показатель-6",
+        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html",
+        "regionGroup": "Минская область"
       },
       "geometry": {
         "type": "Polygon",
@@ -2965,7 +3035,17 @@
         "shapeISO": "",
         "shapeID": "67162791B54270193950847",
         "shapeGroup": "BLR",
-        "shapeType": "ADM2"
+        "shapeType": "ADM2",
+                "imgRegion": "./assets/img/city/ostrovets.jpg",
+        "regionInfo": "Краткая справка",
+        "econom-1": "Показатель-1",
+        "econom-2": "Показатель-2",
+        "econom-3": "Показатель-3",
+        "econom-4": "Показатель-4",
+        "econom-5": "Показатель-5",
+        "econom-6": "Показатель-6",
+        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html",
+        "regionGroup": "Гродненская область"
       },
       "geometry": {
         "type": "Polygon",
@@ -3167,7 +3247,17 @@
         "shapeISO": "",
         "shapeID": "67162791B9257777977100",
         "shapeGroup": "BLR",
-        "shapeType": "ADM2"
+        "shapeType": "ADM2",
+                "imgRegion": "./assets/img/city/smorgon.jpg",
+        "regionInfo": "Краткая справка",
+        "econom-1": "Показатель-1",
+        "econom-2": "Показатель-2",
+        "econom-3": "Показатель-3",
+        "econom-4": "Показатель-4",
+        "econom-5": "Показатель-5",
+        "econom-6": "Показатель-6",
+        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html",
+        "regionGroup": "Гродненская область"
       },
       "geometry": {
         "type": "Polygon",
@@ -19125,7 +19215,17 @@
         "shapeISO": "",
         "shapeID": "67162791B59963656038120",
         "shapeGroup": "BLR",
-        "shapeType": "ADM2"
+        "shapeType": "ADM2",
+        "imgRegion": "./assets/img/city/kamenets.jpg",
+        "regionInfo": "Краткая справка",
+        "econom-1": "Показатель-1",
+        "econom-2": "Показатель-2",
+        "econom-3": "Показатель-3",
+        "econom-4": "Показатель-4",
+        "econom-5": "Показатель-5",
+        "econom-6": "Показатель-6",
+        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html",
+        "regionGroup": "Брестская область"
       },
       "geometry": {
         "type": "Polygon",
@@ -20343,8 +20443,9 @@
         "econom-4": "Показатель-4",
         "econom-5": "Показатель-5",
         "econom-6": "Показатель-6",
-        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html"
-      },
+        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html",
+        "regionGroup": "Брестская область"
+    },
       "geometry": {
         "type": "Polygon",
         "coordinates": [

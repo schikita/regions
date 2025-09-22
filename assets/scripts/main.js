@@ -1,4 +1,15 @@
 // Инициализация карты
+
+const regionsColors = {
+    "Брестская область": { color: "#e74c3c" },
+    "Витебская область": { color: "#9b59b6" },
+    "Гомельская область": { color: "#27ae60" },
+    "Гродненская область": { color: "#f39c12" },
+    "Минская область": { color: "#2980b9" },
+    "Могилевская область": { color: "#16a085" }
+};
+
+
 const map = L.map('map', {
     zoomControl: false,
     scrollWheelZoom: false,
@@ -17,14 +28,22 @@ let geojsonLayer;
 
 // Стили
 function style(feature) {
+    const regionGroup = feature.properties.regionGroup;
+    let color = "#cccccc"; // серый по умолчанию
+
+    if (regionGroup && regionsColors[regionGroup]) {
+        color = regionsColors[regionGroup].color;
+    }
+
     return {
-        fillColor: "#000000",
+        fillColor: color,     // ← используем вычисленный цвет!
         weight: 1,
         opacity: 1,
-        color: "#333",
-        fillOpacity: 0
+        color: "#333",        // границы
+        fillOpacity: 0.4      // полупрозрачная заливка
     };
 }
+
 
 function highlightFeature(e) {
     const layer = e.target;
