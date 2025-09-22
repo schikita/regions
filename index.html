@@ -1,39 +1,50 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <title>Карта районов Беларуси</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      display: flex;
-      height: 100vh;
-    }
-    #map {
-      flex: 1;
-    }
-    #info {
-      width: 300px;
-      padding: 20px;
-      border-left: 1px solid #ccc;
-      background: #fafafa;
-      overflow-y: auto;
-    }
-    #info h2 {
-      margin-top: 0;
-    }
-  </style>
+  <link rel="stylesheet" href="./assets/styles/style.css">
 </head>
+
 <body>
-  <div id="map"></div>
-  <div id="info">
-    <h2>Информация</h2>
-    <p>Наведите на район на карте, чтобы увидеть подробности.</p>
+  <div class="header">
+    <h1>Экономика регионов Беларуси</h1>
+    <div class="subtitle">Интерактивная карта экономических показателей</div>
   </div>
+
+  <div class="main-container">
+    <div id="map"></div>
+    <div class="info-panel">
+      <div class="info-content">
+        <div class="welcome-message">
+          <i class="fas fa-map-marked-alt"></i>
+          <h3>Добро пожаловать!</h3>
+          <p>Кликните на любой регион на карте, чтобы узнать подробную экономическую информацию</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно -->
+  <div id="regionModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <div class="modal-header-content">
+          <h2 id="modalTitle">Название региона</h2>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="info-grid" id="modalInfo"></div>
+      </div>
+    </div>
+  </div>
+
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="./assets/scripts/main.js"></script>
 </body>
+
 </html>
