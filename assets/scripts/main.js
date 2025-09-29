@@ -144,20 +144,38 @@ function onEachFeature(feature, layer) {
 }
 
 // Загружаем данные из GeoJSON
-fetch("geoBoundaries-BLR-ADM2.geojson")
-    .then(response => response.json())
-    .then(data => {
-        geojsonLayer = L.geoJSON(data, {
-            style: style,
-            onEachFeature: onEachFeature,
-            className: 'district-layer'
-        }).addTo(map);
+fetch("geoBoundaries-BLR-ADM2-1.geojson")
+  .then(response => response.json())
+  .then(data => {
+    data.features.forEach(feature => {
+      const props = feature.properties;
 
-        map.fitBounds(geojsonLayer.getBounds(), {padding: [20, 20]});
-    })
-    .catch(error => {
-        console.error("Ошибка загрузки GeoJSON:", error);
+      // 1. Название района
+      props.shapeName = props.NL_NAME_2 || props.NAME_2 || "Неизвестный район";
+
+      // 2. Группа (область)
+      props.regionGroup = props.regionGroup || props.NL_NAME_1 || props.NAME_1 || "Неизвестная область";
+
+      // 3. Заглушки для обязательных полей
+      props.imgRegion = props.imgRegion || "./assets/img/default.jpg";
+      props.regionInfo = props.regionInfo || "Нет дополнительной информации.";
+      for (let i = 1; i <= 6; i++) {
+        props[`econom-${i}`] = props[`econom-${i}`] || "—";
+      }
+      props.linkReg = props.linkReg || null;
     });
+
+    geojsonLayer = L.geoJSON(data, {
+      style: style,
+      onEachFeature: onEachFeature,
+      className: 'district-layer'
+    }).addTo(map);
+
+    map.fitBounds(geojsonLayer.getBounds(), { padding: [20, 20] });
+  })
+  .catch(error => {
+    console.error("Ошибка загрузки GeoJSON:", error);
+  });
 
 // Закрытие модального окна
 closeBtn.onclick = () => modal.style.display = 'none';
