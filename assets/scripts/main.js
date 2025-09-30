@@ -9,16 +9,21 @@ const regionsColors = {
 };
 
 // Карта
+const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768;
+
 const map = L.map("map", {
-  zoomControl: false,
-  scrollWheelZoom: false,
-  doubleClickZoom: false,
-  dragging: false,
+  zoomControl: isMobile,          // покажем «+ / -» на мобиле
+  scrollWheelZoom: false,         // колесо нам не нужно на мобиле
+  doubleClickZoom: isMobile,      // двойной тап увеличивает
+  dragging: true,                 // позволяем перетаскивать и на мобиле
+  touchZoom: true,                // включаем pinch-to-zoom
   attributionControl: false,
-}).setView([53.9, 27.5667], 7);
+  tap: false,                     // во многих случаях помогает на iOS
+  tapTolerance: 15
+}).setView([53.9, 27.5667], isMobile ? 8 : 7.5);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  maxZoom: 18, attribution: "",
+  maxZoom: 20, attribution: "",
 }).addTo(map);
 
 let geojsonLayer;
@@ -183,4 +188,4 @@ window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; 
 
 // Блокируем лишние взаимодействия
 map.keyboard.disable();
-map.touchZoom.disable();
+//map.touchZoom.disable();
