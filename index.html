@@ -3,14 +3,17 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Спецпроект СБ |  ЭКОНОМИКА РАЙОНОВ </title>
+  <title>Спецпроект СБ | ЭКОНОМИКА РАЙОНОВ </title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="./assets/styles/style.css">
 </head>
 
 <body>
   <div class="header">
-    <h1> ЭКОНОМИКА РАЙОНОВ </h1>    
+    <div class="header">
+      <img class="logo" src="./assets/img/logo.png" alt="Экономика районов" />
+    </div>
+
   </div>
 
   <div class="main-container">
@@ -35,10 +38,14 @@
           <h2 id="modalTitle">Название региона</h2>
         </div>
       </div>
-      <div class="modal-body">
-        <div class="info-grid" id="modalInfo"></div>
-      </div> 
-      <div class="modal-footer" id="modalFooter"></div>     
+      <div class="modal-body">        
+
+        <!-- сюда рендерятся карточки и описание -->
+        <div id="modalInfo" class="info-grid"></div>
+      </div>
+
+      <div class="modal-footer" id="modalFooter"></div>
+
     </div>
   </div>
 

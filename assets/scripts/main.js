@@ -1,186 +1,186 @@
-// Инициализация карты
-
+// Цвета регионов
 const regionsColors = {
-    "Брестская область": { color: "#e74c3c" },
-    "Витебская область": { color: "#9b59b6" },
-    "Гомельская область": { color: "#27ae60" },
-    "Гродненская область": { color: "#f39c12" },
-    "Минская область": { color: "#2980b9" },
-    "Могилевская область": { color: "#16a085" }
+  "Брестская область": { color: "#e74c3c" },
+  "Витебская область": { color: "#9b59b6" },
+  "Гомельская область": { color: "#27ae60" },
+  "Гродненская область": { color: "#f39c12" },
+  "Минская область":   { color: "#2980b9" },
+  "Могилевская область": { color: "#00b893" },
 };
 
-
-const map = L.map('map', {
-    zoomControl: false,
-    scrollWheelZoom: false,
-    doubleClickZoom: false,
-    dragging: false,
-    attributionControl: false
+// Карта
+const map = L.map("map", {
+  zoomControl: false,
+  scrollWheelZoom: false,
+  doubleClickZoom: false,
+  dragging: false,
+  attributionControl: false,
 }).setView([53.9, 27.5667], 7);
 
-// Базовый слой карты
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-    attribution: ''
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 18, attribution: "",
 }).addTo(map);
 
 let geojsonLayer;
 
-// Стили
+// Стиль геометрии
 function style(feature) {
-    const regionGroup = feature.properties.regionGroup;
-    let color = "#cccccc"; // серый по умолчанию
-
-    if (regionGroup && regionsColors[regionGroup]) {
-        color = regionsColors[regionGroup].color;
-    }
-
-    return {
-        fillColor: color,     // ← используем вычисленный цвет!
-        weight: 1,
-        opacity: 1,
-        color: "#333",        // границы
-        fillOpacity: 0.4      // полупрозрачная заливка
-    };
+  const { regionGroup, linkReg } = feature.properties;
+  let color = "#cccccc";
+  if (regionGroup && regionsColors[regionGroup]) {
+    color = regionsColors[regionGroup].color;
+  }
+  return {
+    fillColor: color,
+    weight: 1,
+    opacity: 1,
+    color: "#333",
+    fillOpacity: (typeof linkReg === "string" && linkReg.trim() !== "") ? 0.8 : 0.22
+  };
 }
 
 
+// Ховер
 function highlightFeature(e) {
-    const layer = e.target;
-    layer.setStyle({
-        weight: 2,
-        color: "#1976d2",
-        fillColor: "#90caf9",
-        fillOpacity: 0.6
-    });
-    layer.bringToFront();
+  const layer = e.target;
+  layer.setStyle({ weight: 2, color: "#1976d2", fillColor: "#90caf9", fillOpacity: 0.6 });
+  layer.bringToFront();
 }
-
 function resetHighlight(e) {
-    geojsonLayer.resetStyle(e.target);
+  geojsonLayer.resetStyle(e.target);
 }
 
-// Модальное окно
-const modal = document.getElementById('regionModal');
-const closeBtn = document.querySelector('.close');
+// Модалка
+const modal = document.getElementById("regionModal");
+const closeBtn = document.querySelector(".close");
 
 function showModal(properties) {
-    document.getElementById('modalTitle').textContent = properties.shapeName;
+  // Заголовок
+  document.getElementById("modalTitle").textContent = properties.shapeName;
 
-    // Фон в header
-    const modalHeader = document.querySelector(".modal-header");
-    if (properties.imgRegion) {
-        modalHeader.style.backgroundImage = `url('${properties.imgRegion}')`;
-    } else {
-        modalHeader.style.backgroundImage = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
-    }
+  // Фон в header
+  const modalHeader = document.querySelector(".modal-header");
+  if (properties.imgRegion) {
+    modalHeader.style.backgroundImage = `url('${properties.imgRegion}')`;
+  } else {
+    modalHeader.style.backgroundImage = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+  }
 
-    // Экономические показатели
-    const indicators = Object.keys(properties)
-        .filter(key => key.startsWith("econom-"))
-        .map(key => `
-            <div class="info-card">
-                <h4>${key.replace("econom-", "Показатель ")}</h4>
-                <div class="value">${properties[key]}</div>
-            </div>
-        `)
-        .join("");
+  // Карточки показателей + описание
+  const indicatorsDef = [
+    { key: "area", label: "Площадь<br> района" },
+    { key: "population", label: "Численность населения" },
+    { key: "economicallyActive", label: "Заняты в экономике" },
+  ];
 
-    document.getElementById('modalInfo').innerHTML = `
-        ${indicators}
-        <div class="description">
-            ${properties.regionInfo || "Нет дополнительной информации."}
-        </div>
-    `;
+  const indicators = indicatorsDef.map(item => `
+    <div class="info-card">
+      <h4>${item.label}</h4>
+      <div class="value">${properties[item.key] ?? "—"}</div>
+    </div>
+  `).join("");
 
-    // Кнопка-ссылка
-    const footer = document.getElementById("modalFooter");
-    if (properties.linkReg) {
-        footer.innerHTML = `<a href="${properties.linkReg}" target="_blank">Подробнее</a>`;
-    } else {
-        footer.innerHTML = "";
-    }
+  const infoHtml = `
+    ${indicators}
+    <div class="description">
+      ${properties.regionInfo || "Нет дополнительной информации."}
+    </div>
+  `;
+  document.getElementById("modalInfo").innerHTML = infoHtml;
 
-    modal.style.display = "block";
+  // Кнопка-ссылка в футере (только если есть валидная ссылка)
+  const footer = document.getElementById("modalFooter");
+  const hasLink = typeof properties.linkReg === "string" && properties.linkReg.trim() !== "";
+  if (hasLink) {
+    footer.innerHTML = `<a href="${properties.linkReg}" target="_blank" rel="noopener">Подробнее</a>`;
+  } else {
+    footer.innerHTML = "";
+  }
+
+  modal.style.display = "block";
 }
 
-
-
-// Вывод справа при наведении
+// Правый инфо-панель
 function updateInfoPanel(props) {
-    const panel = document.querySelector(".info-content");
-    if (props) {
-        panel.innerHTML = `
-            <h2>${props.shapeName}</h2>
-            <img src="${props.imgRegion}" alt="${props.shapeName}" style="width:100%; border-radius:10px; margin:10px 0;">
-            <p>${props.regionInfo}</p>
-        `;
-    } else {
-        panel.innerHTML = `
-            <div class="welcome-message">
-                <i class="fas fa-map-marked-alt"></i>
-                <h3>Добро пожаловать!</h3>
-                <p>Кликните на любой регион на карте, чтобы узнать подробную экономическую информацию</p>
-            </div>
-        `;
-    }
+  const panel = document.querySelector(".info-content");
+  if (props) {
+    panel.innerHTML = `
+      <h2>${props.shapeName}</h2>
+      <img src="${props.imgRegion}" alt="${props.shapeName}" style="width:100%; border-radius:10px; margin:10px 0;">
+      <p>${props.regionInfo}</p>
+    `;
+  } else {
+    panel.innerHTML = `
+      <div class="welcome-message">
+        <i class="fas fa-map-marked-alt"></i>
+        <h3>Добро пожаловать!</h3>
+        <p>Кликните на любой регион на карте, чтобы узнать подробную экономическую информацию</p>
+      </div>
+    `;
+  }
 }
 
-// События для каждого района
+// Пометка кликабельности (меняем классы path после добавления в DOM)
+function markClickable(layer, isClickable) {
+  layer.on("add", () => {
+    const el = layer.getElement();
+    if (!el) return;
+    el.classList.add("district-path");
+    el.classList.toggle("clickable", isClickable);
+    el.classList.toggle("disabled", !isClickable);
+  });
+  // Дополнительно ослабим заливку для не кликабельных
+  if (!isClickable) layer.setStyle({ fillOpacity: 0.22 });
+}
+
+// Обработчики событий на каждом районе
 function onEachFeature(feature, layer) {
-    layer.on({
-        mouseover: function(e) {
-            highlightFeature(e);
-            updateInfoPanel(feature.properties);
-        },
-        mouseout: function(e) {
-            resetHighlight(e);
-            updateInfoPanel(null);
-        },
-        click: function(e) {
-            showModal(feature.properties);
-        }
-    });
+  const props = feature.properties;
+  const hasLink = typeof props.linkReg === "string" && props.linkReg.trim() !== "";
+
+  markClickable(layer, hasLink);
+
+  layer.on({
+    mouseover: (e) => { highlightFeature(e); updateInfoPanel(props); },
+    mouseout:  (e) => { resetHighlight(e); updateInfoPanel(null); },
+    click:     ()  => { if (hasLink) showModal(props); /* иначе — ничего */ }
+  });
 }
 
-// Загружаем данные из GeoJSON
+// Загрузка GeoJSON
 fetch("geoBoundaries-BLR-ADM2-1.geojson")
-  .then(response => response.json())
-  .then(data => {
-    data.features.forEach(feature => {
-      const props = feature.properties;
+  .then((r) => r.json())
+  .then((data) => {
+    data.features.forEach((feature) => {
+      const p = feature.properties;
 
-      // 1. Название района
-      props.shapeName = props.NL_NAME_2 || props.NAME_2 || "Неизвестный район";
+      // Названия/группы
+      p.shapeName   = p.NL_NAME_2 || p.NAME_2 || "Неизвестный район";
+      p.regionGroup = p.regionGroup || p.NL_NAME_1 || p.NAME_1 || "Неизвестная область";
 
-      // 2. Группа (область)
-      props.regionGroup = props.regionGroup || props.NL_NAME_1 || props.NAME_1 || "Неизвестная область";
+      // Заполнители
+      p.imgRegion  = p.imgRegion  || "./assets/img/default.jpg";
+      p.regionInfo = p.regionInfo || "Нет дополнительной информации.";
+      for (let i = 1; i <= 3; i++) p[`econom-${i}`] = p[`econom-${i}`] || "—";
 
-      // 3. Заглушки для обязательных полей
-      props.imgRegion = props.imgRegion || "./assets/img/default.jpg";
-      props.regionInfo = props.regionInfo || "Нет дополнительной информации.";
-      for (let i = 1; i <= 6; i++) {
-        props[`econom-${i}`] = props[`econom-${i}`] || "—";
-      }
-      props.linkReg = props.linkReg || null;
+      // ВАЖНО: ссылка должна быть либо валидной строкой, либо null
+      if (typeof p.linkReg !== "string" || p.linkReg.trim() === "") p.linkReg = null;
     });
 
     geojsonLayer = L.geoJSON(data, {
       style: style,
-      onEachFeature: onEachFeature,
-      className: 'district-layer'
+      onEachFeature,
+      // у отдельных path будут классы через markClickable
     }).addTo(map);
 
     map.fitBounds(geojsonLayer.getBounds(), { padding: [20, 20] });
   })
-  .catch(error => {
-    console.error("Ошибка загрузки GeoJSON:", error);
-  });
+  .catch((err) => console.error("Ошибка загрузки GeoJSON:", err));
 
-// Закрытие модального окна
-closeBtn.onclick = () => modal.style.display = 'none';
-window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
+// Закрытие модалки
+closeBtn.onclick = () => (modal.style.display = "none");
+window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
 
-// Блокировка взаимодействия с картой
+// Блокируем лишние взаимодействия
 map.keyboard.disable();
 map.touchZoom.disable();
