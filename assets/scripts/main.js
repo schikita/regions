@@ -96,7 +96,8 @@ function ensureIndicatorsContainer() {
 function destroyDistrictUI() {
   const indicators = document.querySelector(".district-indicators");
   const backBtn = document.querySelector(".back-button");
-  if (indicators && indicators.parentNode) indicators.parentNode.removeChild(indicators);
+  if (indicators && indicators.parentNode)
+    indicators.parentNode.removeChild(indicators);
   if (backBtn && backBtn.parentNode) backBtn.parentNode.removeChild(backBtn);
 }
 
@@ -171,7 +172,10 @@ window.onclick = (e) => {
 // === ПОКАЗ ИНФО О РАЙОНЕ (ДЕСКТОП)
 function showDistrictInfo(properties, layer) {
   // если сейчас идёт скрытие — отменяем его
-  if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+  if (hideTimer) {
+    clearTimeout(hideTimer);
+    hideTimer = null;
+  }
 
   const indicatorsContainer = ensureIndicatorsContainer();
 
@@ -207,8 +211,7 @@ function showDistrictInfo(properties, layer) {
     }
   `;
 
-
-// показать UI
+  // показать UI
   indicatorsContainer.style.display = "flex";
   indicatorsContainer.classList.add("active");
   backButton.style.display = "block";
@@ -227,7 +230,7 @@ function showDistrictInfo(properties, layer) {
     </div>
   `;
 
- // зум к району
+  // зум к району
   const bounds = layer.getBounds();
   map.fitBounds(bounds, { padding: [50, 50], maxZoom: 10, duration: 0.8 });
 }
@@ -257,7 +260,7 @@ function resetMapView() {
   districtUIOpen = false;
 
   hideTimer = setTimeout(() => {
-    destroyDistrictUI();       // <— полностью убираем элементы из DOM
+    destroyDistrictUI(); // <— полностью убираем элементы из DOM
     hideTimer = null;
 
     // Возврат обзора карты
@@ -274,7 +277,6 @@ function resetMapView() {
     updateInfoPanel(null);
   }, 260);
 }
-
 
 // ========================================
 // ИНФОРМАЦИОННАЯ ПАНЕЛЬ (ПРИВЕТСТВИЕ)
@@ -386,6 +388,86 @@ fetch("geoBoundaries-BLR-ADM2-1.geojson")
       }
     });
 
+    // ========================================
+    // ДИНАМИЧЕСКОЕ МЕНЮ ОБЛАСТЕЙ И РАЙОНОВ
+    // ========================================
+    const regionList = document.getElementById("regionList");
+    if (regionList) {
+      // Группируем районы по областям
+      const regionsMap = {};
+
+      data.features.forEach((feature) => {
+        const props = feature.properties;
+        const regionName =
+          props.regionGroup ||
+          props.NL_NAME_1 ||
+          props.NAME_1 ||
+          "Неопределённая область";
+        const districtName = props.shapeName || props.NL_NAME_2 || props.NAME_2;
+
+        // Добавляем только те районы, у которых есть ссылка (linkReg)
+        if (props.linkReg && props.linkReg.trim() !== "") {
+          if (!regionsMap[regionName]) {
+            regionsMap[regionName] = [];
+          }
+
+          regionsMap[regionName].push({
+            name: districtName,
+            link: props.linkReg,
+          });
+        }
+      });
+
+      // Очищаем меню
+      regionList.innerHTML = "";
+
+      // Генерируем разметку
+      Object.entries(regionsMap).forEach(([regionName, districts]) => {
+        const li = document.createElement("li");
+        li.classList.add("nav-item");
+
+        const regionButton = document.createElement("button");
+        regionButton.classList.add("region-toggle");
+        regionButton.textContent = regionName;
+
+        const subList = document.createElement("ul");
+        subList.classList.add("sub-list");
+
+        districts.forEach((district) => {
+          const subItem = document.createElement("li");
+          const link = document.createElement("a");
+          link.href = district.link;
+          link.textContent = district.name;
+          link.target = "_blank";
+          subItem.appendChild(link);
+          subList.appendChild(subItem);
+        });
+
+        li.appendChild(regionButton);
+        li.appendChild(subList);
+        regionList.appendChild(li);
+
+        // Добавляем обработчик для разворачивания
+        regionButton.addEventListener("click", () => {
+          const isOpen = subList.classList.contains("open");
+
+          // Закрываем все остальные подменю
+          document.querySelectorAll(".sub-list.open").forEach((list) => {
+            if (list !== subList) {
+              list.classList.remove("open");
+            }
+          });
+
+          // Переключаем текущее
+          if (!isOpen) {
+            subList.classList.add("open");
+          } else {
+            subList.classList.remove("open");
+          }
+        });
+      });
+    }
+
     geojsonLayer = L.geoJSON(data, {
       style: style,
       onEachFeature: onEachFeature,
@@ -456,11 +538,29 @@ document.addEventListener("keydown", (e) => {
 // РАЗВОРАЧИВАНИЕ ОБЛАСТЕЙ В МЕНЮ
 // ========================================
 document.querySelectorAll(".region-toggle").forEach((btn) => {
+  const subList = btn.nextElementSibling;
   btn.addEventListener("click", () => {
-    const subList = btn.nextElementSibling;
-    subList.classList.toggle("open");
+    const isOpen = subList.classList.contains("open");
+
+    // закрываем другие открытые списки
+    document.querySelectorAll(".sub-list.open").forEach((list) => {
+      if (list !== subList) {
+        list.classList.remove("open");
+      }
+    });
+
+    // плавное закрытие текущего
+    if (isOpen) {
+      subList.style.maxHeight = subList.scrollHeight + "px"; // зафиксировать текущую высоту
+      requestAnimationFrame(() => {
+        subList.classList.remove("open");
+      });
+    } else {
+      subList.classList.add("open");
+    }
   });
 });
+
 
 // ========================================
 // ОБРАБОТКА ИЗМЕНЕНИЯ РАЗМЕРА ОКНА
@@ -498,3 +598,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// ========================================
+// МОДАЛЬНОЕ ОКНО "О ПРОЕКТЕ"
+// ========================================
+const aboutBtn = document.getElementById("aboutProjectBtn");
+const aboutModal = document.getElementById("aboutProjectModal");
+const aboutClose = aboutModal?.querySelector(".about-close");
+
+if (aboutBtn && aboutModal && aboutClose) {
+  aboutBtn.addEventListener("click", () => {
+    aboutModal.classList.add("active");
+    document.body.classList.add("modal-open");
+  });
+
+  aboutClose.addEventListener("click", () => {
+    aboutModal.classList.remove("active");
+    document.body.classList.remove("modal-open");
+  });
+
+  aboutModal.addEventListener("click", (e) => {
+    if (e.target === aboutModal) {
+      aboutModal.classList.remove("active");
+      document.body.classList.remove("modal-open");
+    }
+  });
+}

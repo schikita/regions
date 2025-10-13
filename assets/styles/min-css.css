@@ -469,3 +469,160 @@
     gap: 6px;
   }
 }
+
+/* === МОДАЛКА "О ПРОЕКТЕ" И КНОПКА — ТОЛЬКО ДЛЯ МОБИЛЬНЫХ === */
+@media (max-width: 767px) {
+
+  html, body {
+    overflow: hidden; /* убираем вертикальный скролл */
+    height: 100%;
+  }
+
+  /* Кнопка "О проекте" */
+  .about-btn {
+    position: fixed;
+    bottom: 70px;
+    left: 15px;
+    background: rgba(44, 49, 89, 0.95);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-family: NT-Somic-bold;
+    cursor: pointer;
+    z-index: 10001;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.25s ease;
+  }
+
+  .about-btn:hover {
+    background: rgba(52, 152, 219, 0.95);
+    transform: scale(1.05);
+  }
+
+  /* Модалка */
+  .about-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10002;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .about-modal.active {
+    display: flex;
+  }
+
+  .about-modal-content {
+    background: #ffffff;
+    color: #222;
+    border-radius: 14px;
+    padding: 22px 20px;
+    margin: 0 20px;
+    max-height: 80vh;
+    overflow-y: auto;
+    text-align: left;
+    line-height: 1.5;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.35s ease;
+  }
+
+  .about-modal-content h2 {
+    font-family: NT-Somic-bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .about-close {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    font-size: 30px;
+    color: #333;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(40px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+
+/* === УБИРАЕМ ВЕРТИКАЛЬНЫЙ СКРОЛЛ НА ДЕСКТОПЕ === */
+@media (min-width: 768px) {
+  html, body {
+    height: 100vh;
+    overflow: hidden; /* фикс: не даём странице прокручиваться */
+  }
+
+  .main-container {
+    height: calc(100vh - 70px); /* учитываем высоту шапки */
+    overflow: hidden;
+  }
+
+  #map {
+    height: 100%;
+  }
+
+  .info-panel {
+    overflow-y: auto; /* разрешаем прокрутку только внутри панели */
+    height: 100%;
+  }
+
+  footer {
+    position: absolute; /* больше не “фиксированный” */
+    bottom: 0;
+  }
+}
+
+/* ===========================================
+   ПЛАВНОЕ РАСКРЫТИЕ СПИСКА РАЙОНОВ В sideNav
+   =========================================== */
+
+.sub-list {
+  list-style: none;
+  padding-left: 16px;
+  margin-top: 6px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    max-height 0.4s ease,
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* при открытии */
+.sub-list.open {
+  max-height: 600px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sub-list li {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* появление пунктов */
+.sub-list.open li {
+  opacity: 1;
+  transform: translateX(0);
+}

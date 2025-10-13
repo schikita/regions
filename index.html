@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <title>Спецпроект СБ | ЭКОНОМИКА РАЙОНОВ</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="./assets/styles/style.css">
@@ -84,59 +84,7 @@
         <span class="close-nav" id="closeNav"></span>
       </div>
 
-      <ul class="nav-list">
-        <li class="nav-item">
-          <button class="region-toggle">Брестская область</button>
-          <ul class="sub-list">
-            <li><a href="#">Барановичский район</a></li>
-            <li><a href="#">Брестский район</a></li>
-            <li><a href="#">Пинский район</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item">
-          <button class="region-toggle">Витебская область</button>
-          <ul class="sub-list">
-            <li><a href="#">Витебский район</a></li>
-            <li><a href="#">Полоцкий район</a></li>
-            <li><a href="#">Новополоцк</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item">
-          <button class="region-toggle">Гомельская область</button>
-          <ul class="sub-list">
-            <li><a href="#">Гомельский район</a></li>
-            <li><a href="#">Мозырь</a></li>
-            <li><a href="#">Речица</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item">
-          <button class="region-toggle">Минская область</button>
-          <ul class="sub-list">
-            <li><a href="#">Минский район</a></li>
-            <li><a href="#">Слуцкий район</a></li>
-            <li><a href="#">Борисов</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item">
-          <button class="region-toggle">Гродненская область</button>
-          <ul class="sub-list">
-            <li><a href="#">Гродно</a></li>
-            <li><a href="#">Лида</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item">
-          <button class="region-toggle">Могилёвская область</button>
-          <ul class="sub-list">
-            <li><a href="#">Могилёв</a></li>
-            <li><a href="#">Бобруйск</a></li>
-          </ul>
-        </li>
-      </ul>
+      <ul class="nav-list" id="regionList"></ul>
     </nav>
   </div>
 
@@ -178,9 +126,29 @@
     </div>
   </div>
 
+  <!-- Кнопка "О проекте" (только для мобильных) -->
+  <button id="aboutProjectBtn" class="about-btn">ℹ О проекте</button>
+
+  <!-- Модальное окно "О проекте" -->
+  <div id="aboutProjectModal" class="about-modal">
+    <div class="about-modal-content">
+      <span class="about-close">&times;</span>
+      <h2>О проекте</h2>
+      <p>
+        Наш интерактивный проект — о социально-экономическом развитии районов Беларуси.
+        На карте обозначены области и районы страны с возможностью просмотра ключевых показателей:
+        численность населения, занятость и площадь.
+        Цель проекта — обеспечить наглядное представление о потенциале и динамике развития
+        каждого района страны.
+      </p>
+    </div>
+  </div>
+
+
   <footer>
     <div class="container">
-      © Издательский дом «Беларусь сегодня»
+      Специальный проект газеты "Республика"
+      © Издательский дом "Беларусь сегодня", 2025
     </div>
   </footer>
 
