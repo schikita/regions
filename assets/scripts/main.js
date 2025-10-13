@@ -169,7 +169,6 @@ window.onclick = (e) => {
 // ========================================
 // ПОКАЗ ИНФОРМАЦИИ О РАЙОНЕ (ДЛЯ ДЕСКТОПА)
 // ========================================
-// === ПОКАЗ ИНФО О РАЙОНЕ (ДЕСКТОП)
 function showDistrictInfo(properties, layer) {
   // если сейчас идёт скрытие — отменяем его
   if (hideTimer) {
@@ -289,7 +288,7 @@ function updateInfoPanel(props) {
       <h2>${props.shapeName || props.NL_NAME_2}</h2>
       <img src="${props.imgRegion}" alt="${
       props.shapeName
-    }" style="width:100%; border-radius:10px; margin:10px 0;">
+    }" style="width:100%; border-radius:15px 0px 15px 0px; margin:10px 0;">
       <p style="color:#ffffff;">${props.regionInfo}</p>
     `;
   } else {
