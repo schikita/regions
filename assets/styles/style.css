@@ -17,14 +17,37 @@
 body {
   font-family: NT-Somic-reg;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
+footer {
+  background: #0b1630;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  padding: 15px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+}
 
+footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+.main-container {
+  display: flex;
+  height: calc(100vh - 100px);
+  padding-bottom: 50px;
+}
 
 .header {
-  
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,6 +57,8 @@ body {
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   gap: 40px;
+  position: relative;
+  z-index: 100;
 }
 
 .logo-block {
@@ -49,6 +74,7 @@ body {
   flex: 1;
   text-align: right;
   padding-left: 40px;
+  margin-right: 25%;
   border-left: 2px solid rgba(0, 0, 0, 0.062);
 }
 
@@ -75,7 +101,6 @@ body {
   font-size: 14px;
   color: #6c757d;
 }
-
 
 @keyframes fadeIn {
   from {
@@ -112,7 +137,6 @@ body {
   }
 }
 
-
 .quote-author {
   font-size: 14px;
   color: #ffffff;
@@ -125,16 +149,17 @@ body {
   opacity: 0.9;
 }
 
-
-
 .main-container {
   display: flex;
   height: calc(100vh - 80px);
+  position: relative;
+  z-index: 1;
 }
 
 #map {
   flex: 1;
   position: relative;
+  z-index: 1;
 }
 
 .info-panel {
@@ -145,6 +170,8 @@ body {
   border-left: 1px solid rgba(255, 255, 255, 0.2);
   overflow-y: auto;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .info-content {
@@ -177,11 +204,56 @@ body {
 .project-hint {
   margin-top: 15px;
   padding: 10px 15px;
-  border: 2px solid #bdc3c7;    
-  border-radius: 8px;
+  border: 2px solid #bdc3c7;
+  border-radius: 15px 0px 15px 0px;
   font-weight: 500;
   font-size: 14px;
   color: #ffffff;
+}
+
+.menu-icon {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  width: 48px;
+  height: 48px;
+  border: 1.5px solid #ffffff;
+  border-radius: 12px 0 12px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10000;
+  background-color: rgba(255, 255, 255, 0.03);
+  transition: all 0.25s ease;
+}
+
+.menu-icon span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 2px;
+  margin: 3px 0;
+  transition: all 0.3s ease;
+}
+
+.menu-icon:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.menu-icon.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-icon.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-icon.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* Стили для модального окна */
@@ -232,7 +304,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.45); /* тёмный оверлей */
+  background: rgba(0, 0, 0, 0.45);
   z-index: 1;
 }
 
@@ -394,11 +466,154 @@ body {
   transition: all 0.3s ease !important;
 }
 
-/* район кликабельный/некликабельный */
 .district-path.clickable {
   cursor: pointer;
 }
+
 .district-path.disabled {
   cursor: not-allowed;
   fill-opacity: 0.22 !important;
+}
+
+/* ВЫЕЗЖАЮЩИЙ НАВБАР */
+.side-nav {
+  position: fixed;
+  top: 0;
+  right: -25%;
+  width: 25%;
+  height: 100vh;
+  background: rgb(44, 49, 89);
+  box-shadow: -2px 0 15px rgba(0,0,0,0.4);
+  transition: right 0.35s ease;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+  isolation: isolate;
+}
+
+.side-nav.open {
+  right: 0;
+}
+
+/* Правильная иерархия z-index для корректного отображения */
+
+/* Оверлей для затемнения при открытом меню */
+/* Найти .nav-overlay и заменить на: */
+/* Заменить .nav-overlay на: */
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 25%;  /* ДОБАВИТЬ ЭТУ СТРОКУ - не заходит на область меню */
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease, right 0.35s ease;
+  pointer-events: none;
+}
+
+.nav-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.side-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.side-nav-header h3 {
+  font-family: NT-Somic-bold;
+  font-size: 20px;
+  margin: 0;
+}
+
+.close-nav {
+  font-size: 28px;
+  cursor: pointer;
+  color: #fff;
+  line-height: 1;
+  transition: 0.2s;
+}
+
+.close-nav:hover {
+  color: #61a0ff;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  margin-bottom: 10px;
+}
+
+.region-toggle {
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  border: none;
+  font-size: 15px;
+  text-align: left;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: NT-Somic-bold;
+  transition: 0.25s;
+}
+
+.region-toggle:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.sub-list {
+  list-style: none;
+  padding-left: 15px;
+  margin-top: 6px;
+  display: none;
+}
+
+.sub-list.open {
+  display: block;
+}
+
+.sub-list a {
+  color: #cdd3f7;
+  text-decoration: none;
+  display: block;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: 0.25s;
+  font-size: 14px;
+}
+
+.sub-list a:hover {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+}
+
+/* Адаптивность для навбара */
+@media (max-width: 768px) {
+  .side-nav {
+    width: 260px;
+    right: -260px;
+    padding: 16px;
+  }
+  
+  .side-nav.open {
+    right: 0;
+  }
+  
+  .side-nav-header h3 {
+    font-size: 18px;
+  }
 }

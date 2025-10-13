@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Спецпроект СБ | ЭКОНОМИКА РАЙОНОВ </title>
+  <title>Спецпроект СБ | ЭКОНОМИКА РАЙОНОВ</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="./assets/styles/style.css">
   <link rel="stylesheet" href="./assets/styles/min-css.css">
@@ -31,25 +31,24 @@
   <link rel="icon" type="image/png" sizes="192x192" href="./assets/favicons/favicon-192x192.png">
   <link rel="icon" type="image/png" sizes="310x310" href="./assets/favicons/favicon-310x310.png">
 
-  <!-- Apple Touch Icons (достаточно 180x180, но добавлены все имеющиеся) -->
+  <!-- Apple Touch Icons -->
   <link rel="apple-touch-icon" sizes="57x57" href="./assets/favicons/favicon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="./assets/favicons/favicon-60x60.png">
   <link rel="apple-touch-icon" sizes="72x72" href="./assets/favicons/favicon-72x72.png">
   <link rel="apple-touch-icon" sizes="76x76" href="./assets/favicons/favicon-76x76.png">
   <link rel="apple-touch-icon" sizes="114x114" href="./assets/favicons/favicon-114x114.png">
   <link rel="apple-touch-icon" sizes="120x120" href="./assets/favicons/favicon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="./assets/faviconsfavicon-144x144.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="./assets/favicons/favicon-144x144.png">
   <link rel="apple-touch-icon" sizes="152x152" href="./assets/favicons/favicon-152x152.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicons/favicon-180x180.png">
 
   <!-- Windows tiles -->
   <meta name="msapplication-TileColor" content="#2b5797">
-  <meta name="msapplication-TileImage" content="./assets/faviconsfavicon-144x144.png">
+  <meta name="msapplication-TileImage" content="./assets/favicons/favicon-144x144.png">
   <meta name="msapplication-config" content="./assets/favicons/browserconfig.xml">
 
-  <!-- Браузерная тема (адресная строка на мобильных) -->
+  <!-- Браузерная тема -->
   <meta name="theme-color" content="#1e63d8">
-
 </head>
 
 <body>
@@ -71,11 +70,74 @@
         </span>
       </p>
     </div>
+
+    <div class="menu-icon" id="menuToggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="side-nav" id="sideNav">
+      <div class="side-nav-header">
+        <h3>Области Беларуси</h3>
+        <span class="close-nav" id="closeNav"></span>
+      </div>
+
+      <ul class="nav-list">
+        <li class="nav-item">
+          <button class="region-toggle">Брестская область</button>
+          <ul class="sub-list">
+            <li><a href="#">Барановичский район</a></li>
+            <li><a href="#">Брестский район</a></li>
+            <li><a href="#">Пинский район</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <button class="region-toggle">Витебская область</button>
+          <ul class="sub-list">
+            <li><a href="#">Витебский район</a></li>
+            <li><a href="#">Полоцкий район</a></li>
+            <li><a href="#">Новополоцк</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <button class="region-toggle">Гомельская область</button>
+          <ul class="sub-list">
+            <li><a href="#">Гомельский район</a></li>
+            <li><a href="#">Мозырь</a></li>
+            <li><a href="#">Речица</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <button class="region-toggle">Минская область</button>
+          <ul class="sub-list">
+            <li><a href="#">Минский район</a></li>
+            <li><a href="#">Слуцкий район</a></li>
+            <li><a href="#">Борисов</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <button class="region-toggle">Гродненская область</button>
+          <ul class="sub-list">
+            <li><a href="#">Гродно</a></li>
+            <li><a href="#">Лида</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <button class="region-toggle">Могилёвская область</button>
+          <ul class="sub-list">
+            <li><a href="#">Могилёв</a></li>
+            <li><a href="#">Бобруйск</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
   </div>
-
-
-
-
 
   <div class="main-container">
     <div id="map"></div>
@@ -93,7 +155,7 @@
         </div>
         <div class="project-hint">
           <img src="./assets/img/Pointer.png" width="20px" alt="">
-           Кликните на любой район на карте, чтобы узнать подробную экономическую информацию.
+          Кликните на любой район на карте, чтобы узнать подробную экономическую информацию.
         </div>
       </div>
     </div>
@@ -109,16 +171,17 @@
         </div>
       </div>
       <div class="modal-body">
-
-        <!-- сюда рендерятся карточки и описание -->
         <div id="modalInfo" class="info-grid"></div>
       </div>
-
       <div class="modal-footer" id="modalFooter"></div>
-
     </div>
   </div>
 
+  <footer>
+    <div class="container">
+      © Издательский дом «Беларусь сегодня»
+    </div>
+  </footer>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="./assets/scripts/main.js"></script>

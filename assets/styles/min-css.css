@@ -24,6 +24,7 @@
     border-left: none;
     padding-left: 0;
     text-align: center;
+    margin-right: 0;
   }
 
   .quote-text {
@@ -47,6 +48,7 @@
   .info-panel {
     width: 35%;
     border-left: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1;
   }
 
   .info-content {
@@ -104,6 +106,20 @@
     transform: scale(0.98);
     background: #2980b9;
   }
+
+  /* Боковое меню на планшетах */
+  .side-nav {
+    width: 280px;
+    right: -280px;
+  }
+
+  .side-nav.open {
+    right: 0;
+  }
+
+  .menu-icon {
+    z-index: 10000;
+  }
 }
 
 /* Мобильные устройства (до 767px) */
@@ -124,6 +140,7 @@
     border-radius: 12px;
     padding: 16px 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-right: 0;
   }
 
   .quote-text {
@@ -154,6 +171,7 @@
     border-left: none;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1;
   }
 
   .info-content {
@@ -286,11 +304,31 @@
     font-weight: 600;
     box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
   }
+
+  .modal-footer a:active {
+    transform: scale(0.98);
+    background: #2980b9;
+  }
+
+  /* Боковое меню на мобильной версии */
+  .side-nav {
+    width: 260px;
+    right: -260px;
+  }
+
+  .side-nav.open {
+    right: 0;
+  }
+
+  /* Оверлей на мобильной версии */
+  .nav-overlay {
+    z-index: 9998;
+  }
 }
 
 /* Очень маленькие экраны */
 @media (max-width: 360px) {
- .header {
+  .header {
     padding: 10px 15px;
     gap: 10px;
   }
@@ -310,8 +348,10 @@
   .quote-author {
     font-size: 11px;
   }
+
   .info-panel {
     height: 160px;
+    z-index: 1;
   }
 
   .info-content {
@@ -336,3 +376,118 @@
   }
 }
 
+/* МОБИЛЬНАЯ ВЕРСИЯ - quote-banner и menu-icon */
+@media (max-width: 768px) {
+  .header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo-block {
+    align-self: flex-start;
+    margin-left: 16px;
+  }
+
+  .logo {
+    width: 160px;
+    height: auto;
+  }
+
+  .quote-banner {
+    max-width: 85%;
+    margin: 12px auto 0;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #fff;
+    color: #0a1a3a;
+    font-size: 0.85rem;
+    line-height: 1.35;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .quote-banner .quote-text {
+    margin-bottom: 6px;
+    font-size: 0.87rem;
+  }
+
+  .quote-banner .quote-author {
+    font-size: 0.75rem;
+  }
+
+  .quote-banner .quote-context {
+    font-size: 0.7rem;
+    opacity: 0.8;
+  }
+
+  /* Компактная кнопка меню */
+  .menu-icon {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ffffff;
+    border-radius: 10px 0 10px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.05);
+    z-index: 10000;
+  }
+
+  .menu-icon span {
+    width: 16px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    margin: 2px 0;
+    transition: 0.3s;
+  }
+
+  /* Боковое меню на мобильной версии */
+  .side-nav {
+    width: 260px;
+    right: -260px;
+  }
+
+  .side-nav.open {
+    right: 0;
+  }
+}
+
+/* На очень маленьких экранах */
+@media (max-width: 480px) {
+  .menu-icon {
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    z-index: 10000;
+  }
+
+  .menu-icon span {
+    width: 16px;
+  }
+
+  .quote-banner {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    padding: 12px 16px;
+  }
+
+  /* Боковое меню */
+  .side-nav {
+    width: 240px;
+    right: -240px;
+  }
+
+  .side-nav.open {
+    right: 0;
+  }
+}
