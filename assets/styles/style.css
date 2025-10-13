@@ -41,12 +41,6 @@ footer .container {
   opacity: 0.9;
 }
 
-.main-container {
-  display: flex;
-  height: calc(100vh - 100px);
-  padding-bottom: 50px;
-}
-
 .header {
   display: flex;
   align-items: center;
@@ -58,7 +52,7 @@ footer .container {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   gap: 40px;
   position: relative;
-  z-index: 100;
+  z-index: 10001; /* поднят над overlay */
 }
 
 .logo-block {
@@ -100,53 +94,6 @@ footer .container {
 .quote-context {
   font-size: 14px;
   color: #6c757d;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.quote-banner::before {
-  content: "";
-  position: absolute;
-  top: -10px;
-  left: -8px;
-  font-size: 80px;
-  font-family: Georgia, serif;
-  color: #667eea;
-  opacity: 0.3;
-  line-height: 1;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.1;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 0.2;
-  }
-}
-
-.quote-author {
-  font-size: 14px;
-  color: #ffffff;
-  margin-top: 12px;
-  font-weight: 600;
-  position: relative;
-  z-index: 1;
-  text-align: right;
-  padding-right: 10px;
-  opacity: 0.9;
 }
 
 .main-container {
@@ -191,14 +138,7 @@ footer .container {
 .welcome-message {
   text-align: left;
   color: #ffffff;
-  font-style: none;
   margin-top: 50px;
-}
-
-.welcome-message i {
-  font-size: 48px;
-  color: #bdc3c7;
-  margin-bottom: 20px;
 }
 
 .project-hint {
@@ -211,6 +151,7 @@ footer .container {
   color: #ffffff;
 }
 
+/* Меню (бургер) */
 .menu-icon {
   position: absolute;
   top: 40px;
@@ -224,7 +165,7 @@ footer .container {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  z-index: 10000;
+  z-index: 10002;
   background-color: rgba(255, 255, 255, 0.03);
   transition: all 0.25s ease;
 }
@@ -256,17 +197,25 @@ footer .container {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Стили для модального окна */
+/* =======================
+   СТИЛИ МОДАЛЬНОГО ОКНА
+   ======================= */
 .modal {
   display: none;
   position: fixed;
-  z-index: 1000;
+  z-index: 10005;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
   animation: fadeIn 0.3s ease;
+  overflow-y: auto;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modal-content {
@@ -282,6 +231,10 @@ footer .container {
   overflow: hidden;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
   animation: modalShow 0.4s ease forwards;
+}
+
+@keyframes modalShow {
+  to { transform: translate(-50%, -50%) scale(1); }
 }
 
 .modal-header {
@@ -300,24 +253,8 @@ footer .container {
 .modal-header::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.45);
-  z-index: 1;
-}
-
-.modal-header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="%23ffffff10"><polygon points="0,100 1000,100 1000,0 0,40"/></svg>');
-  background-size: cover;
-  border-radius: 5px;
 }
 
 .modal-header-content {
@@ -329,13 +266,6 @@ footer .container {
   font-size: 32px;
   margin-bottom: 10px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.modal-header .region-type {
-  font-size: 16px;
-  opacity: 0.9;
-  text-transform: uppercase;
-  letter-spacing: 2px;
 }
 
 .close {
@@ -441,41 +371,9 @@ footer .container {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Анимации */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes modalShow {
-  to {
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-/* Кастомные стили для Leaflet */
-.leaflet-control-zoom {
-  display: none !important;
-}
-
-.district-layer {
-  transition: all 0.3s ease !important;
-}
-
-.district-path.clickable {
-  cursor: pointer;
-}
-
-.district-path.disabled {
-  cursor: not-allowed;
-  fill-opacity: 0.22 !important;
-}
-
-/* ВЫЕЗЖАЮЩИЙ НАВБАР */
+/* ======================
+   САЙД-МЕНЮ И ОВЕРЛЕЙ
+   ====================== */
 .side-nav {
   position: fixed;
   top: 0;
@@ -483,37 +381,84 @@ footer .container {
   width: 25%;
   height: 100vh;
   background: rgb(44, 49, 89);
-  box-shadow: -2px 0 15px rgba(0,0,0,0.4);
+  box-shadow: -2px 0 15px rgba(0, 0, 0, 0.4);
   transition: right 0.35s ease;
   z-index: 9999;
   display: flex;
   flex-direction: column;
   padding: 20px;
   overflow-y: auto;
-  isolation: isolate;
 }
 
 .side-nav.open {
   right: 0;
 }
 
-/* Правильная иерархия z-index для корректного отображения */
+/* Кнопки областей */
+.region-toggle {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  text-align: left;
+  padding: 12px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: NT-Somic-bold;
+  margin-bottom: 5px;
+  transition: 0.25s;
+}
 
-/* Оверлей для затемнения при открытом меню */
-/* Найти .nav-overlay и заменить на: */
-/* Заменить .nav-overlay на: */
+.region-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Список районов */
+.sub-list {
+  list-style: none;
+  padding-left: 15px;
+  margin-top: 6px;
+  display: none;
+}
+
+.nav-list {
+  list-style-type: none;
+}
+
+.sub-list.open {
+  display: block;
+}
+
+.sub-list a {
+  color: #bcd1ff;
+  text-decoration: none;
+  display: block;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: 0.25s;
+  font-size: 15px;
+}
+
+
+
+.sub-list a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
 .nav-overlay {
   position: fixed;
-  top: 0;
+  top: 80px; /* не затемняет header */
   left: 0;
-  right: 25%;  /* ДОБАВИТЬ ЭТУ СТРОКУ - не заходит на область меню */
-  height: 100%;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.6);
   z-index: 9998;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.35s ease, visibility 0.35s ease, right 0.35s ease;
   pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .nav-overlay.active {
@@ -521,6 +466,7 @@ footer .container {
   visibility: visible;
   pointer-events: auto;
 }
+
 .side-nav-header {
   display: flex;
   justify-content: space-between;
@@ -529,37 +475,9 @@ footer .container {
   color: #fff;
 }
 
-.side-nav-header h3 {
-  font-family: NT-Somic-bold;
-  font-size: 20px;
-  margin: 0;
-}
-
-.close-nav {
-  font-size: 28px;
-  cursor: pointer;
-  color: #fff;
-  line-height: 1;
-  transition: 0.2s;
-}
-
-.close-nav:hover {
-  color: #61a0ff;
-}
-
-.nav-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-item {
-  margin-bottom: 10px;
-}
-
 .region-toggle {
   width: 100%;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   color: #fff;
   border: none;
   font-size: 15px;
@@ -572,48 +490,169 @@ footer .container {
 }
 
 .region-toggle:hover {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
 }
 
-.sub-list {
-  list-style: none;
-  padding-left: 15px;
-  margin-top: 6px;
-  display: none;
+/* Адаптив для мобильных */
+@media (max-width: 767px) {
+  .main-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  #map {
+    width: 100%;
+    height: calc(100vh - 230px);
+  }
+
+  .info-panel {
+    width: 100%;
+    height: 230px;
+    overflow-y: auto;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
 }
 
-.sub-list.open {
+  .district-indicators,
+  .back-button {
+    display:block;
+    visibility: block;
+  }
+
+
+  .district-indicators {
+  position: fixed;
+  bottom: 70px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 280px;
+  z-index: 500;
+}
+
+.indicator-popup {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-left: 4px solid #3498db;
+  animation: slideInLeft 0.4s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.indicator-popup:hover {
+  transform: translateX(3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.indicator-popup h4 {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #2c3e50;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.indicator-popup .value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #3498db;
+  font-family: NT-Somic-bold;
+}
+
+/* Кнопка "Подробнее" */
+.indicator-popup.link-popup {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  border-left: 4px solid #fff;
+  padding: 0;
+  overflow: hidden;
+}
+
+.indicator-popup.link-popup a {
   display: block;
-}
-
-.sub-list a {
-  color: #cdd3f7;
-  text-decoration: none;
-  display: block;
-  padding: 6px 8px;
-  border-radius: 6px;
-  transition: 0.25s;
-  font-size: 14px;
-}
-
-.sub-list a:hover {
-  background: rgba(255,255,255,0.12);
+  padding: 20px 25px;
   color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: NT-Somic-bold;
+  text-align: center;
+  transition: all 0.3s ease;
 }
 
-/* Адаптивность для навбара */
-@media (max-width: 768px) {
-  .side-nav {
-    width: 260px;
-    right: -260px;
-    padding: 16px;
+.indicator-popup.link-popup a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  padding-left: 30px;
+}
+
+/* =============================
+   Кнопка "Назад"
+   ============================= */
+.back-button {
+  position: fixed;
+  top: 160px;
+  right: 30%;
+  z-index: 501;
+  background: rgba(44, 49, 89, 0.95);
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-family: NT-Somic-bold;
+  display: none;
+  transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.back-button.active {
+  display: block;
+}
+
+.back-button:hover {
+  background: rgba(52, 152, 219, 0.95);
+  transform: scale(1.05);
+}
+
+/* =============================
+   Только на десктопе
+   ============================= */
+@media (min-width: 768px) {
+  .district-indicators {
+    display: flex !important;
   }
-  
-  .side-nav.open {
-    right: 0;
+  .back-button {
+    display: block !important;
   }
-  
-  .side-nav-header h3 {
-    font-size: 18px;
+}
+
+/* =============================
+   На мобильных скрываем полностью
+   ============================= */
+@media (max-width: 767px) {
+  .district-indicators,
+  .back-button {
+    display: none !important;
   }
+}
+.district-indicators.hiding,
+.back-button.hiding {
+  pointer-events: none;
 }

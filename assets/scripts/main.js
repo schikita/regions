@@ -10,11 +10,19 @@ const regionsColors = {
   "Могилевская область": { color: "#00b893" },
 };
 
+// === Глобальный флаг выбранного района, чтобы ничего не "всплывало" после скрытия
+let districtUIOpen = false;
+let hideTimer = null;
+
 // ========================================
 // ИНИЦИАЛИЗАЦИЯ КАРТЫ
 // ========================================
 const isMobile =
   window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768;
+
+function checkIsDesktop() {
+  return window.innerWidth >= 768;
+}
 
 const map = L.map("map", {
   zoomControl: isMobile,
@@ -40,17 +48,18 @@ let geojsonLayer;
 function style(feature) {
   const { regionGroup, linkReg } = feature.properties;
   let color = "#cccccc";
-  
+
   if (regionGroup && regionsColors[regionGroup]) {
     color = regionsColors[regionGroup].color;
   }
-  
+
   return {
     fillColor: color,
     weight: 1,
     opacity: 1,
     color: "#333",
-    fillOpacity: typeof linkReg === "string" && linkReg.trim() !== "" ? 0.8 : 0.22,
+    fillOpacity:
+      typeof linkReg === "string" && linkReg.trim() !== "" ? 0.8 : 0.22,
   };
 }
 
@@ -72,17 +81,34 @@ function resetHighlight(e) {
   geojsonLayer.resetStyle(e.target);
 }
 
+// Хелпер: создать (или вернуть) контейнер карточек
+function ensureIndicatorsContainer() {
+  let el = document.querySelector(".district-indicators");
+  if (!el) {
+    el = document.createElement("div");
+    el.className = "district-indicators";
+    document.body.appendChild(el);
+  }
+  return el;
+}
+
+// Хелпер: удалить UI карточек и кнопку полностью
+function destroyDistrictUI() {
+  const indicators = document.querySelector(".district-indicators");
+  const backBtn = document.querySelector(".back-button");
+  if (indicators && indicators.parentNode) indicators.parentNode.removeChild(indicators);
+  if (backBtn && backBtn.parentNode) backBtn.parentNode.removeChild(backBtn);
+}
+
 // ========================================
-// МОДАЛЬНОЕ ОКНО
+// МОДАЛЬНОЕ ОКНО (ДЛЯ МОБИЛЬНЫХ)
 // ========================================
 const modal = document.getElementById("regionModal");
 const closeBtn = document.querySelector(".close");
 
 function showModal(properties) {
-  // Установка заголовка
   document.getElementById("modalTitle").textContent = properties.shapeName;
 
-  // Установка фона в header
   const modalHeader = document.querySelector(".modal-header");
   if (properties.imgRegion) {
     modalHeader.style.backgroundImage = `url('${properties.imgRegion}')`;
@@ -91,14 +117,12 @@ function showModal(properties) {
       "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
   }
 
-  // Определение показателей для карточек
   const indicatorsDef = [
     { key: "area", label: "Площадь<br> района" },
     { key: "population", label: "Численность населения" },
     { key: "economicallyActive", label: "Заняты в экономике" },
   ];
 
-  // Генерация карточек показателей
   const indicators = indicatorsDef
     .map(
       (item) => `
@@ -110,7 +134,6 @@ function showModal(properties) {
     )
     .join("");
 
-  // Формирование полного контента с описанием
   const infoHtml = `
     ${indicators}
     <div class="description">
@@ -119,11 +142,10 @@ function showModal(properties) {
   `;
   document.getElementById("modalInfo").innerHTML = infoHtml;
 
-  // Кнопка-ссылка в футере (только если есть валидная ссылка)
   const footer = document.getElementById("modalFooter");
   const hasLink =
     typeof properties.linkReg === "string" && properties.linkReg.trim() !== "";
-  
+
   if (hasLink) {
     footer.innerHTML = `<a href="${properties.linkReg}" target="_blank" rel="noopener">Подробнее</a>`;
   } else {
@@ -133,7 +155,6 @@ function showModal(properties) {
   modal.style.display = "block";
 }
 
-// Закрытие модального окна
 closeBtn.onclick = () => {
   modal.style.display = "none";
 };
@@ -145,15 +166,128 @@ window.onclick = (e) => {
 };
 
 // ========================================
-// ИНФОРМАЦИОННАЯ ПАНЕЛЬ
+// ПОКАЗ ИНФОРМАЦИИ О РАЙОНЕ (ДЛЯ ДЕСКТОПА)
+// ========================================
+// === ПОКАЗ ИНФО О РАЙОНЕ (ДЕСКТОП)
+function showDistrictInfo(properties, layer) {
+  // если сейчас идёт скрытие — отменяем его
+  if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+
+  const indicatorsContainer = ensureIndicatorsContainer();
+
+  let backButton = document.querySelector(".back-button");
+  if (!backButton) {
+    backButton = document.createElement("button");
+    backButton.className = "back-button";
+    backButton.textContent = "← Назад";
+    // важный момент: единственный обработчик, вызывает resetMapView()
+    backButton.onclick = resetMapView;
+    document.body.appendChild(backButton);
+  }
+
+  indicatorsContainer.innerHTML = `
+    <div class="indicator-popup">
+      <h4>Площадь района</h4>
+      <div class="value">${properties.area ?? "—"}</div>
+    </div>
+    <div class="indicator-popup">
+      <h4>Численность населения</h4>
+      <div class="value">${properties.population ?? "—"}</div>
+    </div>
+    <div class="indicator-popup">
+      <h4>Заняты в экономике</h4>
+      <div class="value">${properties.economicallyActive ?? "—"}</div>
+    </div>
+    ${
+      properties.linkReg
+        ? `<div class="indicator-popup link-popup">
+             <a href="${properties.linkReg}" target="_blank" rel="noopener">Подробнее →</a>
+           </div>`
+        : ""
+    }
+  `;
+
+
+// показать UI
+  indicatorsContainer.style.display = "flex";
+  indicatorsContainer.classList.add("active");
+  backButton.style.display = "block";
+  backButton.classList.add("active");
+  districtUIOpen = true;
+
+  // обновить правую панель
+  const panel = document.querySelector(".info-content");
+  panel.innerHTML = `
+    <h2 style="color:#ffffff; font-family:NT-Somic-bold; font-size:28px; margin-bottom:20px;">
+      ${properties.shapeName || properties.NL_NAME_2}
+    </h2>
+    <div class="description" style="color:#ffffff; background:rgba(255,255,255,0.1);
+      padding:15px; border-radius:8px; font-size:14px; line-height:1.6;">
+      ${properties.regionInfo || "Нет дополнительной информации."}
+    </div>
+  `;
+
+ // зум к району
+  const bounds = layer.getBounds();
+  map.fitBounds(bounds, { padding: [50, 50], maxZoom: 10, duration: 0.8 });
+}
+
+// Функция сброса карты
+// === СБРОС КАРТЫ И СКРЫТИЕ UI (с уничтожением DOM-узлов)
+function resetMapView() {
+  // если уже скрыто — выходим
+  if (!districtUIOpen) return;
+
+  const indicatorsContainer = document.querySelector(".district-indicators");
+  const backButton = document.querySelector(".back-button");
+
+  // плавная анимация исчезновения, затем полное удаление узлов
+  if (indicatorsContainer) {
+    indicatorsContainer.style.transition = "all 0.25s ease";
+    indicatorsContainer.style.opacity = "0";
+    indicatorsContainer.style.transform = "translateY(20px)";
+  }
+  if (backButton) {
+    backButton.style.transition = "all 0.25s ease";
+    backButton.style.opacity = "0";
+    backButton.style.transform = "translateY(-10px)";
+  }
+
+  // Жёсткая защита от повторного появления
+  districtUIOpen = false;
+
+  hideTimer = setTimeout(() => {
+    destroyDistrictUI();       // <— полностью убираем элементы из DOM
+    hideTimer = null;
+
+    // Возврат обзора карты
+    if (geojsonLayer) {
+      map.fitBounds(geojsonLayer.getBounds(), {
+        padding: [20, 20],
+        maxZoom: 8.5,
+        duration: 0.8,
+      });
+      setTimeout(() => map.panBy([0, 40]), 300);
+    }
+
+    // Возвращаем приветственный блок после удаления UI
+    updateInfoPanel(null);
+  }, 260);
+}
+
+
+// ========================================
+// ИНФОРМАЦИОННАЯ ПАНЕЛЬ (ПРИВЕТСТВИЕ)
 // ========================================
 function updateInfoPanel(props) {
   const panel = document.querySelector(".info-content");
-  
+
   if (props) {
     panel.innerHTML = `
-      <h2>${props.shapeName}</h2>
-      <img src="${props.imgRegion}" alt="${props.shapeName}" style="width:100%; border-radius:10px; margin:10px 0;">
+      <h2>${props.shapeName || props.NL_NAME_2}</h2>
+      <img src="${props.imgRegion}" alt="${
+      props.shapeName
+    }" style="width:100%; border-radius:10px; margin:10px 0;">
       <p style="color:#ffffff;">${props.regionInfo}</p>
     `;
   } else {
@@ -183,13 +317,12 @@ function markClickable(layer, isClickable) {
   layer.on("add", () => {
     const el = layer.getElement();
     if (!el) return;
-    
+
     el.classList.add("district-path");
     el.classList.toggle("clickable", isClickable);
     el.classList.toggle("disabled", !isClickable);
   });
-  
-  // Ослабление заливки для некликабельных районов
+
   if (!isClickable) {
     layer.setStyle({ fillOpacity: 0.22 });
   }
@@ -216,7 +349,13 @@ function onEachFeature(feature, layer) {
     },
     click: () => {
       if (hasLink) {
-        showModal(props);
+        // Динамическая проверка устройства
+        if (checkIsDesktop()) {
+          showDistrictInfo(props, layer);
+        } else {
+          // На мобильных - показываем модальное окно БЕЗ зума
+          showModal(props);
+        }
       }
     },
   });
@@ -228,42 +367,35 @@ function onEachFeature(feature, layer) {
 fetch("geoBoundaries-BLR-ADM2-1.geojson")
   .then((response) => response.json())
   .then((data) => {
-    // Обработка свойств каждого района
     data.features.forEach((feature) => {
       const p = feature.properties;
 
-      // Установка названий и групп
       p.shapeName = p.NL_NAME_2 || p.NAME_2 || "Неизвестный район";
-      p.regionGroup = p.regionGroup || p.NL_NAME_1 || p.NAME_1 || "Неизвестная область";
+      p.regionGroup =
+        p.regionGroup || p.NL_NAME_1 || p.NAME_1 || "Неизвестная область";
 
-      // Установка изображений и описаний по умолчанию
       p.imgRegion = p.imgRegion || "./assets/img/default.jpg";
       p.regionInfo = p.regionInfo || "Нет дополнительной информации.";
-      
-      // Установка экономических показателей
+
       for (let i = 1; i <= 3; i++) {
         p[`econom-${i}`] = p[`econom-${i}`] || "—";
       }
 
-      // Обработка ссылок
       if (typeof p.linkReg !== "string" || p.linkReg.trim() === "") {
         p.linkReg = null;
       }
     });
 
-    // Добавление слоя районов на карту
     geojsonLayer = L.geoJSON(data, {
       style: style,
       onEachFeature: onEachFeature,
     }).addTo(map);
 
-    // Подгонка карты под границы Беларуси
     map.fitBounds(geojsonLayer.getBounds(), {
       padding: [20, 20],
       maxZoom: 8.5,
     });
 
-    // Небольшой сдвиг карты вверх для лучшего позиционирования
     setTimeout(() => {
       map.panBy([0, 40]);
     }, 300);
@@ -282,50 +414,38 @@ map.keyboard.disable();
 // ========================================
 const menuToggle = document.getElementById("menuToggle");
 const sideNav = document.getElementById("sideNav");
-const closeNav = document.getElementById("closeNav");
 
-// Создание оверлея
 const navOverlay = document.createElement("div");
 navOverlay.className = "nav-overlay";
 document.body.appendChild(navOverlay);
 
-// Функция открытия меню
 function openMenu() {
   sideNav.classList.add("open");
   menuToggle.classList.add("active");
   navOverlay.classList.add("active");
-  document.body.style.overflow = "hidden"; // Блокируем прокрутку
+  document.body.style.overflow = "hidden";
 }
 
-// Функция закрытия меню
 function closeMenu() {
   sideNav.classList.remove("open");
   menuToggle.classList.remove("active");
   navOverlay.classList.remove("active");
-  document.body.style.overflow = ""; // Возвращаем прокрутку
+  document.body.style.overflow = "";
 }
 
-// Открытие/закрытие меню по клику на кнопку
 menuToggle.addEventListener("click", (e) => {
   e.stopPropagation();
   if (sideNav.classList.contains("open")) {
-    closeMenu();  // ← Если меню открыто (крестик) - закрываем
+    closeMenu();
   } else {
-    openMenu();   // ← Если меню закрыто (гамбургер) - открываем
+    openMenu();
   }
 });
 
-// Закрытие меню по кнопке закрытия
-closeNav.addEventListener("click", () => {
-  closeMenu();
-});
-
-// Закрытие меню при клике на оверлей
 navOverlay.addEventListener("click", () => {
   closeMenu();
 });
 
-// Закрытие меню при нажатии Escape
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && sideNav.classList.contains("open")) {
     closeMenu();
@@ -351,4 +471,30 @@ window.addEventListener("resize", () => {
   resizeTimer = setTimeout(() => {
     map.invalidateSize();
   }, 250);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const backButton = document.querySelector(".back-button");
+  const districtIndicators = document.querySelector(".district-indicators");
+
+  if (backButton && districtIndicators) {
+    backButton.addEventListener("click", () => {
+      // Анимация исчезновения
+      districtIndicators.style.opacity = "0";
+      districtIndicators.style.transform = "translateY(20px)";
+      backButton.style.opacity = "0";
+      backButton.style.transform = "translateY(-10px)";
+
+      // После анимации — скрываем
+      setTimeout(() => {
+        districtIndicators.style.display = "none";
+        backButton.classList.remove("active");
+        backButton.style.display = "none";
+        districtIndicators.style.opacity = "";
+        districtIndicators.style.transform = "";
+        backButton.style.opacity = "";
+        backButton.style.transform = "";
+      }, 300);
+    });
+  }
 });
