@@ -170,7 +170,6 @@ window.onclick = (e) => {
 // ПОКАЗ ИНФОРМАЦИИ О РАЙОНЕ (ДЛЯ ДЕСКТОПА)
 // ========================================
 function showDistrictInfo(properties, layer) {
-  // если сейчас идёт скрытие — отменяем его
   if (hideTimer) {
     clearTimeout(hideTimer);
     hideTimer = null;
@@ -183,7 +182,6 @@ function showDistrictInfo(properties, layer) {
     backButton = document.createElement("button");
     backButton.className = "back-button";
     backButton.textContent = "← Назад";
-    // важный момент: единственный обработчик, вызывает resetMapView()
     backButton.onclick = resetMapView;
     document.body.appendChild(backButton);
   }
@@ -210,26 +208,19 @@ function showDistrictInfo(properties, layer) {
     }
   `;
 
-  // показать UI
-  indicatorsContainer.style.display = "flex";
-  indicatorsContainer.classList.add("active");
+  // === показываем кнопку и вычисляем позицию относительно header ===
+  const header = document.querySelector(".header");
+  const headerHeight = header ? header.getBoundingClientRect().height : 0;
+
+  backButton.style.top = `${headerHeight + 20}px`;
   backButton.style.display = "block";
   backButton.classList.add("active");
+  backButton.style.opacity = "1";
+
+  indicatorsContainer.style.display = "flex";
+  indicatorsContainer.classList.add("active");
   districtUIOpen = true;
 
-  // обновить правую панель
-  const panel = document.querySelector(".info-content");
-  panel.innerHTML = `
-    <h2 style="color:#ffffff; font-family:NT-Somic-bold; font-size:28px; margin-bottom:20px;">
-      ${properties.shapeName || properties.NL_NAME_2}
-    </h2>
-    <div class="description" style="color:#ffffff; background:rgba(255,255,255,0.1);
-      padding:15px; border-radius:8px; font-size:14px; line-height:1.6;">
-      ${properties.regionInfo || "Нет дополнительной информации."}
-    </div>
-  `;
-
-  // зум к району
   const bounds = layer.getBounds();
   map.fitBounds(bounds, { padding: [50, 50], maxZoom: 10, duration: 0.8 });
 }
@@ -288,7 +279,7 @@ function updateInfoPanel(props) {
       <h2>${props.shapeName || props.NL_NAME_2}</h2>
       <img src="${props.imgRegion}" alt="${
       props.shapeName
-    }" style="width:100%; border-radius:15px 0px 15px 0px; margin:10px 0;">
+    }" style="width:100%; border-radius:0px 15px 0px 15px; margin:10px 0;">
       <p style="color:#ffffff;">${props.regionInfo}</p>
     `;
   } else {
@@ -304,8 +295,7 @@ function updateInfoPanel(props) {
         </p>
       </div>
       <div class="project-hint">
-        <img src="./assets/img/Pointer.png" width="20px;" alt="Указатель">  
-        Кликните на любой район на карте, чтобы узнать подробную экономическую информацию.
+        ВЫБЕРИТЕ РАЙОН НА КАРТЕ
       </div>
     `;
   }
@@ -623,3 +613,33 @@ if (aboutBtn && aboutModal && aboutClose) {
     }
   });
 }
+
+
+
+// ======   ВЫЧИСЛЕНИЕ ВЫСОТЫ HEADER ДЛЯ ПРАВИЛЬНОГО ПОЗИЦИОНИРОВАНИЯ КНОПКИ НАЗАД === //
+
+window.addEventListener("load", function () {
+  // Получаем высоту header
+  const header = document.querySelector(".header");
+  const headerHeight = header.getBoundingClientRect().height;
+
+  // Получаем кнопку "Назад"
+  const backButton = document.querySelector(".back-button");
+
+  // Устанавливаем top в зависимости от высоты header
+  if (backButton) {
+    backButton.style.top = `${headerHeight + 20}px`; // 20px - отступ от header
+    backButton.style.display = "block"; // Делаем кнопку видимой сразу
+  }
+});
+
+// Также обновляем топ кнопки при изменении размеров окна
+window.addEventListener("resize", function () {
+  const header = document.querySelector(".header");
+  const headerHeight = header.getBoundingClientRect().height;
+
+  const backButton = document.querySelector(".back-button");
+  if (backButton) {
+    backButton.style.top = `${headerHeight + 20}px`; // 20px отступ
+  }
+});
