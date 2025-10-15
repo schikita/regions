@@ -329,27 +329,35 @@ function onEachFeature(feature, layer) {
 
   markClickable(layer, hasLink);
 
-  layer.on({
-    mouseover: (e) => {
+layer.on({
+  mouseover: (e) => {
+    // Обновляем панель только если не открыт район
+    if (!districtUIOpen) {
       highlightFeature(e);
       updateInfoPanel(props);
-    },
-    mouseout: (e) => {
-      resetHighlight(e);
+    }
+  },
+  mouseout: (e) => {
+    resetHighlight(e);
+    // Если район не выбран — возвращаем приветствие
+    if (!districtUIOpen) {
       updateInfoPanel(null);
-    },
-    click: () => {
-      if (hasLink) {
-        // Динамическая проверка устройства
-        if (checkIsDesktop()) {
-          showDistrictInfo(props, layer);
-        } else {
-          // На мобильных - показываем модальное окно БЕЗ зума
-          showModal(props);
-        }
+    }
+  },
+  click: () => {
+    if (hasLink) {
+      if (checkIsDesktop()) {
+        // При клике показываем район и "фиксируем" панель
+        districtUIOpen = true;
+        showDistrictInfo(props, layer);
+        updateInfoPanel(props); // фиксируем выбранный район в панели
+      } else {
+        showModal(props);
       }
-    },
-  });
+    }
+  },
+});
+
 }
 
 // ========================================

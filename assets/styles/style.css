@@ -137,7 +137,7 @@ footer .container {
 .welcome-message {
   text-align: left;
   color: #ffffff;
-  margin-top: 50px;
+  margin-top: 0px;
 }
 
 .project-hint {
@@ -614,7 +614,7 @@ footer .container {
   z-index: 501;
   background: rgba(44, 49, 89, 0.95);
   color: #fff;
-  border: 2px solid #748aec;
+  border: 2px solid #b9fd9a;
   padding: 10px 20px;
   border-radius: 0px 10px 0px 10px;
   cursor: pointer;
@@ -633,8 +633,9 @@ footer .container {
 }
 
 .back-button:hover {
-  background: rgba(52, 152, 219, 0.95);
+  background: #b9fd9a;
   transform: scale(1.05);
+  color: #000000;
 }
 
 /* =============================
