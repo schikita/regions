@@ -112,9 +112,10 @@
     right: -280px;
   }
 
-  .side-nav.open {
+  .side-nav.open {    
     right: 0;
   }
+
 
   .menu-icon {
     z-index: 10000;
