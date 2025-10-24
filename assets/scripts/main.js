@@ -138,7 +138,9 @@ function showModal(properties) {
   const infoHtml = `
     ${indicators}
     <div class="description">
+      <p>
       ${properties.regionInfo || "Нет дополнительной информации."}
+      </p>
     </div>
   `;
   document.getElementById("modalInfo").innerHTML = infoHtml;
@@ -148,7 +150,7 @@ function showModal(properties) {
     typeof properties.linkReg === "string" && properties.linkReg.trim() !== "";
 
   if (hasLink) {
-    footer.innerHTML = `<a href="${properties.linkReg}" target="_blank" rel="noopener">Подробнее</a>`;
+    footer.innerHTML = `<a href="${properties.linkReg}" target="_blank" rel="noopener">ЧИТАТЬ</a>`;
   } else {
     footer.innerHTML = "";
   }
@@ -186,7 +188,7 @@ function showDistrictInfo(properties, layer) {
     document.body.appendChild(backButton);
   }
 
-  indicatorsContainer.innerHTML = `
+  indicatorsContainer.innerHTML = ` 
     <div class="indicator-popup">
       <h4>Площадь района</h4>
       <div class="value">${properties.area ?? "—"}</div>
@@ -199,16 +201,11 @@ function showDistrictInfo(properties, layer) {
       <h4>Заняты в экономике</h4>
       <div class="value">${properties.economicallyActive ?? "—"}</div>
     </div>
-    ${
-      properties.linkReg
-        ? `<div class="indicator-popup link-popup">
-             <a href="${properties.linkReg}" target="_blank" rel="noopener">Подробнее →</a>
-           </div>`
-        : ""
-    }
+   
   `;
 
-  // === показываем кнопку и вычисляем позицию относительно header ===
+  addDesktopReadMoreButton(properties);
+
   const header = document.querySelector(".header");
   const headerHeight = header ? header.getBoundingClientRect().height : 0;
 
@@ -223,6 +220,39 @@ function showDistrictInfo(properties, layer) {
 
   const bounds = layer.getBounds();
   map.fitBounds(bounds, { padding: [50, 50], maxZoom: 10, duration: 0.8 });
+
+  // >>> Добавляем подпись района <<<
+  if (properties.NL_NAME_2) {
+    addDistrictLabel(layer, properties.NL_NAME_2);
+  }
+}
+
+
+
+
+// Функция для добавления кнопки "Подробнее" под .info-content только на десктопе
+function addDesktopReadMoreButton(properties) {
+  // Проверяем, что экран — десктоп
+  if (window.innerWidth < 1024) return;
+
+  // Контейнер info-content
+  const panel = document.querySelector(".info-content");
+  if (!panel || !properties.linkReg) return;
+
+  // Удаляем старую кнопку, если она есть
+  const existingBtn = panel.querySelector(".btn-read-desktop");
+  if (existingBtn) existingBtn.remove();
+
+  // Создаём ссылку
+  const btn = document.createElement("a");
+  btn.href = properties.linkReg;
+  btn.target = "_blank";
+  btn.rel = "noopener";
+  btn.textContent = "Подробнее →";
+  btn.className = "btn-read-desktop indicator-popup link-popup"; // добавляем нужные классы
+
+  // Вставляем кнопку под info-content
+  panel.appendChild(btn);
 }
 
 // Функция сброса карты
@@ -266,6 +296,13 @@ function resetMapView() {
     // Возвращаем приветственный блок после удаления UI
     updateInfoPanel(null);
   }, 260);
+
+  // Удаляем подпись района
+if (map._districtLabelMarker) {
+  map.removeLayer(map._districtLabelMarker);
+  map._districtLabelMarker = null;
+}
+
 }
 
 // ========================================
@@ -281,6 +318,14 @@ function updateInfoPanel(props) {
       props.shapeName
     }" style="width:100%; border-radius:0px 15px 0px 15px; margin:10px 0;">
       <p style="color:#ffffff;">${props.regionInfo}</p>
+    ${
+        // Показываем кнопку только если есть ссылка и это десктоп
+        props.linkReg && window.innerWidth >= 1024
+          ? `<div class="indicator-popup link-popup" style="margin-top:15px;">
+               <a href="${props.linkReg}" target="_blank" rel="noopener">Подробнее →</a>
+             </div>`
+          : ""
+      }
     `;
   } else {
     panel.innerHTML = `
@@ -329,35 +374,34 @@ function onEachFeature(feature, layer) {
 
   markClickable(layer, hasLink);
 
-layer.on({
-  mouseover: (e) => {
-    // Обновляем панель только если не открыт район
-    if (!districtUIOpen) {
-      highlightFeature(e);
-      updateInfoPanel(props);
-    }
-  },
-  mouseout: (e) => {
-    resetHighlight(e);
-    // Если район не выбран — возвращаем приветствие
-    if (!districtUIOpen) {
-      updateInfoPanel(null);
-    }
-  },
-  click: () => {
-    if (hasLink) {
-      if (checkIsDesktop()) {
-        // При клике показываем район и "фиксируем" панель
-        districtUIOpen = true;
-        showDistrictInfo(props, layer);
-        updateInfoPanel(props); // фиксируем выбранный район в панели
-      } else {
-        showModal(props);
+  layer.on({
+    mouseover: (e) => {
+      // Обновляем панель только если не открыт район
+      if (!districtUIOpen) {
+        highlightFeature(e);
+        updateInfoPanel(props);
       }
-    }
-  },
-});
-
+    },
+    mouseout: (e) => {
+      resetHighlight(e);
+      // Если район не выбран — возвращаем приветствие
+      if (!districtUIOpen) {
+        updateInfoPanel(null);
+      }
+    },
+    click: () => {
+      if (hasLink) {
+        if (checkIsDesktop()) {
+          // При клике показываем район и "фиксируем" панель
+          districtUIOpen = true;
+          showDistrictInfo(props, layer);
+          updateInfoPanel(props); // фиксируем выбранный район в панели
+        } else {
+          showModal(props);
+        }
+      }
+    },
+  });
 }
 
 // ========================================
@@ -558,7 +602,6 @@ document.querySelectorAll(".region-toggle").forEach((btn) => {
   });
 });
 
-
 // ========================================
 // ОБРАБОТКА ИЗМЕНЕНИЯ РАЗМЕРА ОКНА
 // ========================================
@@ -622,8 +665,6 @@ if (aboutBtn && aboutModal && aboutClose) {
   });
 }
 
-
-
 // ======   ВЫЧИСЛЕНИЕ ВЫСОТЫ HEADER ДЛЯ ПРАВИЛЬНОГО ПОЗИЦИОНИРОВАНИЯ КНОПКИ НАЗАД === //
 
 window.addEventListener("load", function () {
@@ -651,3 +692,27 @@ window.addEventListener("resize", function () {
     backButton.style.top = `${headerHeight + 20}px`; // 20px отступ
   }
 });
+
+
+// === ДОБАВЛЕНИЕ ПОДПИСИ НАЗВАНИЯ РАЙОНА В ЦЕНТР ===
+function addDistrictLabel(layer, name) {
+  // Удаляем старую метку, если была
+  const existingLabel = document.querySelector(".district-label");
+  if (existingLabel) existingLabel.remove();
+
+  // Получаем координаты центра полигона
+  const center = layer.getBounds().getCenter();
+
+  // Создаём элемент для подписи
+  const label = L.divIcon({
+    className: "district-label",
+    html: `<span>${name}</span>`,
+    iconSize: null, // чтобы размер зависел от содержимого
+  });
+
+  // Добавляем метку на карту
+  const marker = L.marker(center, { icon: label }).addTo(map);
+
+  // Сохраняем ссылку на маркер, чтобы удалить при сбросе
+  map._districtLabelMarker = marker;
+}

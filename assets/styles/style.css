@@ -223,13 +223,13 @@ footer .container {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.7);
-  background: white;
+  background: rgba(255, 255, 255, 0);
   border-radius: 5px;
   width: 90%;
   max-width: 800px;
   max-height: 90vh;
   overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  /*box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);*/
   animation: modalShow 0.4s ease forwards;
 }
 
@@ -669,3 +669,21 @@ footer .container {
   display: none;
 }
 
+
+
+.district-label {
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+  -webkit-text-stroke: 0.8px rgba(0, 0, 0, 0.582); /* обводка текста чёрным */
+  /*text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8); /* мягкая тень для контраста */
+  text-shadow: 3px 3px 5px #000000;
+  pointer-events: none;
+  text-align: center;
+}
+
+.district-label span {
+  
+  padding: 6px 14px;
+  
+}
