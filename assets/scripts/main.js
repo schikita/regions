@@ -303,6 +303,10 @@ if (map._districtLabelMarker) {
   map._districtLabelMarker = null;
 }
 
+document.querySelectorAll(".sub-list li.active").forEach((li) => {
+  li.classList.remove("active");
+});
+
 }
 
 // ========================================
@@ -391,6 +395,8 @@ function onEachFeature(feature, layer) {
     },
     click: () => {
       if (hasLink) {
+        highlightActiveDistrict(props.shapeName); 
+
         if (checkIsDesktop()) {
           // При клике показываем район и "фиксируем" панель
           districtUIOpen = true;
@@ -401,8 +407,25 @@ function onEachFeature(feature, layer) {
         }
       }
     },
+
+    
   });
 }
+
+function highlightActiveDistrict(selectedName) {
+  // Сбрасываем подсветку у всех
+  document.querySelectorAll(".sub-list li.active").forEach((li) => {
+    li.classList.remove("active");
+  });
+
+  // Находим нужный пункт меню по названию
+  document.querySelectorAll(".sub-list li a").forEach((link) => {
+    if (link.textContent.trim() === selectedName.trim()) {
+      link.parentElement.classList.add("active");
+    }
+  });
+}
+
 
 // ========================================
 // ЗАГРУЗКА И ОБРАБОТКА GEOJSON

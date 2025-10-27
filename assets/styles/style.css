@@ -250,12 +250,7 @@ footer .container {
   overflow: hidden;
 }
 
-.modal-header::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-}
+
 
 .modal-header-content {
   z-index: 2;
@@ -686,4 +681,10 @@ footer .container {
   
   padding: 6px 14px;
   
+}
+
+
+.sub-list li.active a {
+  color: #7CFC00; /* салатовый */
+  font-weight: 600;
 }

@@ -303,12 +303,7 @@
     text-align: center;
   }
 
-  .modal-header::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-  }
+ 
 
   .modal-header h2 {
     z-index: 2;
@@ -321,9 +316,9 @@
     position: absolute;
     top: 16px;
     right: 16px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    border-radius: 0px 10px 0px 10px;
     background: rgba(0, 0, 0, 0.45);
     color: #fff;
     font-size: 28px;
