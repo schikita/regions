@@ -4916,7 +4916,7 @@
         "area": "1353,5 км²",
         "population": "21 563",
         "economicallyActive": "9 236",
-        "linkReg": "https://www.sb.by/articles/videt-dolgovremennye-perspektivy-na-chto-orientiruetsya-lyakhovichskiy-rayon-v-svoem-razvitii.html",
+        "linkReg": "https://sp.sb.by/er_ljahovichski",
         "regionGroup": "Брестская область"
       },
       "geometry": {
@@ -13034,7 +13034,7 @@
         "area": "164 309 га",
         "population": "125 800",
         "economicallyActive": "54 450",
-        "linkReg": "https://www.sb.by/articles/polesskaya-mnogogrannost.html",
+        "linkReg": "https://sp.sb.by/er_mozirskii",
         "regionGroup": "Гомельская область"
       },
       "geometry": {
@@ -20032,7 +20032,7 @@
         "area": "1349,9 км²",
         "population": "24 653",
         "economicallyActive": "10 554",
-        "linkReg": "https://www.sb.by/articles/orientir-novye-proizvodstva-i-blagosostoyanie-lyudey.html",
+        "linkReg": "https://sp.sb.by/er_mostovskii",
         "regionGroup": "Гродненская область"
       },
       "geometry": {
@@ -20747,7 +20747,7 @@
         "area": "191 154 га",
         "population": "30 800",
         "economicallyActive": "14 581",
-        "linkReg": "https://www.sb.by/articles/splav-molodoy-energii-i-opyta.html",
+        "linkReg": "https://sp.sb.by/er_schuchinski",
         "regionGroup": "Гродненская область"
       },
       "geometry": {
@@ -25805,7 +25805,7 @@
         "area": "139 541 га",
         "population": "127 622",
         "economicallyActive": "52 270",
-        "linkReg": "https://www.sb.by/articles/prioritet-kompleksnoe-i-sbalansirovannoe-razvitie.html",
+        "linkReg": "https://sp.sb.by/er_molodzechenski",
         "regionGroup": "Минская область"
       },
       "geometry": {
@@ -33675,7 +33675,7 @@
         "population": "9 190",
         "economicallyActive": "3 460",
         "regionGroup": "Могилевская область",
-        "linkReg": "https://www.sb.by/articles/rasti-i-razvivatsya-ekonomika-raiona.html"
+        "linkReg": "https://sp.sb.by/er_dribinskii"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -35286,7 +35286,7 @@
         "area": "154 572 га",
         "population": "21 605",
         "economicallyActive": "8 099",
-        "linkReg": "https://www.sb.by/articles/fundament-silnykh-regionov-lyudi.html",
+        "linkReg": "https://sp.sb.by/er_klimovichski",
         "regionGroup": "Могилевская область"
       },
       "geometry": {
@@ -38096,7 +38096,7 @@
         "area": "1 707 км²",
         "population": "250 000",
         "economicallyActive": "150 000",
-        "linkReg": "https://www.sb.by/articles/uverennyy-vzglyad-v-zavtrashniy-den.html",
+        "linkReg": "https://sp.sb.by/er_orshanski",
         "regionGroup": "Витебская область"
       },
       "geometry": {
@@ -44646,7 +44646,7 @@
         "area": "2 738 км²",
         "population": "33 695",
         "economicallyActive": "17 625",
-        "linkReg": "https://www.sb.by/articles/kurs-na-uspekh-vitebskii-raion.html",
+        "linkReg": "https://sp.sb.by/er_vitebski",
         "regionGroup": "Витебская область"
       },
       "geometry": {
