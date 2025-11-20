@@ -15980,13 +15980,10 @@
         "HASC_2": "BY.HO.ZK",
         "imgRegion": "./assets/img/rajons/Гомельская обл/Житковичи.jpg",
         "regionInfo": "-",
-        "econom-1": "Показатель-1",
-        "econom-2": "Показатель-2",
-        "econom-3": "Показатель-3",
-        "econom-4": "Показатель-4",
-        "econom-5": "Показатель-5",
-        "econom-6": "Показатель-6",
-        "linkReg": "",
+        "area": "292 000 га",
+        "population": "32 100",
+        "economicallyActive": "12 500",
+        "linkReg": "https://www.sb.by/articles/silnye-zvenya-pripyatskogo-kraya.html",
         "regionGroup": "Гомельская область"
       },
       "geometry": {
