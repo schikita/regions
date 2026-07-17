@@ -936,7 +936,7 @@
         "area": "1 534 км²",
         "population": "45 800",
         "economicallyActive": "15 700",
-        "linkReg": "http://sp.sb.by/er_brestskogo",
+        "linkReg": "https://sp.sb.by/er_brestskogo",
         "regionGroup": "Брестская область"
       },
       "geometry": {
@@ -3431,7 +3431,7 @@
         "area": "155 100 га",
         "population": "33 700",
         "economicallyActive": "14 000",
-        "linkReg": "https://www.sb.by/articles/kurs-na-stabilnyy-rost-ekonomicheskie-drayvery-ivanovskogo-rayona.html",
+        "linkReg": "https://sp.sb.by/er_ivanovskii",
         "regionGroup": "Брестская область"
       },
       "geometry": {
@@ -4562,7 +4562,7 @@
         "area": "2 700 км²",
         "population": "60 604",
         "economicallyActive": "25 065",
-        "linkReg": "http://sp.sb.by/er_luninetskii",
+        "linkReg": "https://sp.sb.by/er_luninetskii",
         "regionGroup": "Брестская область"
       },
       "geometry": {
@@ -6563,7 +6563,7 @@
         "area": "337,3  тыс га",
         "population": "67 763",
         "economicallyActive": "26 600",
-        "linkReg": "https://www.sb.by/articles/zhemchuzhina-polesya-stolinskiy-rayon.html",
+        "linkReg": "https://sp.sb.by/er_stolinskii",
         "regionGroup": "Брестская область"
       },
       "geometry": {
@@ -8431,7 +8431,7 @@
         "area": "1 948,34 км²",
         "population": "68 075",
         "economicallyActive": "13 044",
-        "linkReg": "https://www.sb.by/articles/krepkiy-fundament-budushchego.html",
+        "linkReg": "https://sp.sb.by/er_gomelski",
         "regionGroup": "Гомельская область"
       },
       "geometry": {
@@ -11451,7 +11451,7 @@
         "area": "278 240 га",
         "population": "53 947",
         "economicallyActive": "20 632",
-        "linkReg": "http://sp.sb.by/er_kalinkovichskii",
+        "linkReg": "https://sp.sb.by/er_kalinkovichskii",
         "regionGroup": "Гомельская область"
       },
       "geometry": {
@@ -14708,7 +14708,7 @@
         "area": "190 700 га",
         "population": "74 700",
         "economicallyActive": "32 430",
-        "linkReg": "http://sp.sb.by/er_svetlogorskii",
+        "linkReg": "https://sp.sb.by/er_svetlogorskii",
         "regionGroup": "Гомельская область"
       },
       "geometry": {
@@ -21363,7 +21363,7 @@
         "area": "1 400 км²",
         "population": "48 464",
         "economicallyActive": "20 973",
-        "linkReg": "http://sp.sb.by/er_smorgonski",
+        "linkReg": "https://sp.sb.by/er_smorgonski",
         "regionGroup": "Гродненская область"
       },
       "geometry": {
@@ -21620,7 +21620,7 @@
        "area": "145 127 га",
         "population": "12 230",
         "economicallyActive": "5 500",
-        "linkReg": "http://sp.sb.by/er_svislochskii",
+        "linkReg": "https://sp.sb.by/er_svislochskii",
         "regionGroup": "Гродненская область"
       },
       "geometry": {
@@ -21855,7 +21855,7 @@
         "area": "1 200 км²",
         "population": "62 400",
         "economicallyActive": "28 000",
-        "linkReg": "http://sp.sb.by/er_volkovusskii",
+        "linkReg": "https://sp.sb.by/er_volkovusskii",
         "regionGroup": "Гродненская область"
       },
       "geometry": {
@@ -23919,7 +23919,7 @@
         "area": "120 000 га",
         "population": "70 702",
         "economicallyActive": "33 233",
-        "linkReg": "http://sp.sb.by/er_dzerzhinskii",
+        "linkReg": "https://sp.sb.by/er_dzerzhinskii",
         "regionGroup": "Минская область"
       },
       "geometry": {
@@ -25998,7 +25998,7 @@
         "area": "190 266 км²",
         "population": "286 544",
         "economicallyActive": "173 000",
-        "linkReg": "http://sp.sb.by/er_minskii",
+        "linkReg": "https://sp.sb.by/er_minskii",
         "regionGroup": "Минская область"
       },
       "geometry": {
@@ -28124,7 +28124,7 @@
         "area": "1 817,83 км²",
         "population": "83 789",
         "economicallyActive": "36 262",    
-        "linkReg": "https://www.sb.by/articles/dlya-rezultata-vazhen-kazhdyy-shag.html",
+        "linkReg": "https://sp.sb.by/er_slutski",
         "regionGroup": "Минская область"
       },
       "geometry": {
@@ -28488,7 +28488,7 @@
         "area": "137 900 га",
         "population": "56 700",
         "economicallyActive": "27 467",
-        "linkReg": "http://sp.sb.by/er_smolevichskii",
+        "linkReg": "https://sp.sb.by/er_smolevichskii",
         "regionGroup": "Минская область"
       },
       "geometry": {
@@ -30727,7 +30727,7 @@
         "area": "2 444 км²",
         "population": "45 778",
         "economicallyActive": "14 666",
-        "linkReg": "http://sp.sb.by/er_vileiskii",
+        "linkReg": "https://sp.sb.by/er_vileiskii",
         "regionGroup": "Минская область"
       },
       "geometry": {
@@ -33131,7 +33131,7 @@
         "area": "146 962,7 га",
         "population": "16 291",
         "economicallyActive": "6 267",
-        "linkReg": "http://sp.sb.by/er_chausskii",
+        "linkReg": "https://sp.sb.by/er_chausskii",
         "regionGroup": "Могилевская область"
       },
       "geometry": {
@@ -33719,7 +33719,7 @@
         "area": "130 000 га",
         "population": "11 803",
         "economicallyActive": "5 000",
-        "linkReg": "http://sp.sb.by/er_glusski",
+        "linkReg": "https://sp.sb.by/er_glusski",
         "regionGroup": "Могилевская область"
       },
       "geometry": {
@@ -36060,7 +36060,7 @@
         "area": "190 000 га",
         "population": "39 200",
         "economicallyActive": "21 850",
-        "linkReg": "http://sp.sb.by/er_mogilevskii",
+        "linkReg": "https://sp.sb.by/er_mogilevskii",
         "regionGroup": "Могилевская область"
       },
       "geometry": {
@@ -38305,7 +38305,7 @@
         "area": "2 269,8 км²",
         "population": "22 764",
         "economicallyActive": "7 998",
-        "linkReg": "http://sp.sb.by/er_braslavskii",
+        "linkReg": "https://sp.sb.by/er_braslavskii",
         "regionGroup": "Витебская область"
       },
       "geometry": {
@@ -39858,7 +39858,7 @@
         "area": "2 984 км²",
         "population": "19 954",
         "economicallyActive": "6 786",
-        "linkReg": "http://sp.sb.by/er_gorodokskii",
+        "linkReg": "https://sp.sb.by/er_gorodokskii",
         "regionGroup": "Витебская область"
       },
       "geometry": {
@@ -41624,7 +41624,7 @@
         "area": "3 169 км²",
         "population": "99 287",
         "economicallyActive": "41 900",
-        "linkReg": "http://sp.sb.by/er_polotskogo",
+        "linkReg": "https://sp.sb.by/er_polotskogo",
         "regionGroup": "Витебская область"
       },
       "geometry": {
@@ -43929,7 +43929,7 @@
         "area": "1 497 км²",
         "population": "21 292",
         "economicallyActive": "8 400",
-        "linkReg": "https://www.sb.by/articles/prioritety-budushchego.html",
+        "linkReg": "https://sp.sb.by/er_tolochinskii",
         "regionGroup": "Витебская область"
       },
       "geometry": {
