@@ -3198,7 +3198,7 @@
         "area": "1 710 км²",
         "population": "23 870",
         "economicallyActive": "9 199",
-        "linkReg": "https://www.sb.by/articles/rost-cherez-diversifikatsiyu-na-chto-delaet-stavku-gantsevichskiy-rayon.html",
+        "linkReg": "http://sp.sb.by/er_gancevichskii",
         "regionGroup": "Брестская область"
       },
       "geometry": {
@@ -3431,7 +3431,7 @@
         "area": "155 100 га",
         "population": "33 700",
         "economicallyActive": "14 000",
-        "linkReg": "https://sp.sb.by/er_ivanovskii",
+        "linkReg": "http://sp.sb.by/er_ivanovskii",
         "regionGroup": "Брестская область"
       },
       "geometry": {
@@ -8431,7 +8431,7 @@
         "area": "1 948,34 км²",
         "population": "68 075",
         "economicallyActive": "13 044",
-        "linkReg": "https://sp.sb.by/er_gomelski",
+        "linkReg": "http://sp.sb.by/er_gomelski",
         "regionGroup": "Гомельская область"
       },
       "geometry": {
@@ -12096,14 +12096,11 @@
         "CC_2": "NA",
         "HASC_2": "BY.HO.HN",
         "imgRegion": "./assets/img/rajons/Гомельская обл/Хойники.png",
-        "regionInfo": "-",
-        "econom-1": "Показатель-1",
-        "econom-2": "Показатель-2",
-        "econom-3": "Показатель-3",
-        "econom-4": "Показатель-4",
-        "econom-5": "Показатель-5",
-        "econom-6": "Показатель-6",
-        "linkReg": "",
+        "regionInfo": "Хойникский район Гомельской области сегодня служит примером того, как малая территория благодаря комплексному многовекторному развитию становится сильным фундаментом для новых возможностей, не уступающих большим городам. ",
+        "area": "204 400 га",
+        "population": "17 704",
+        "economicallyActive": "7 746",
+        "linkReg": "http://sp.sb.by/er_hoinikskii",
         "regionGroup": "Гомельская область"
       },
       "geometry": {
@@ -19626,7 +19623,7 @@
         "area": "154 300 га",
         "population": "130 194",
         "economicallyActive": "53 555",
-        "linkReg": "https://www.sb.by/articles/zhit-sozdavat-krepnut.html",
+        "linkReg": "http://sp.sb.by/er_lidskii",
         "regionGroup": "Гродненская область"
       },
       "geometry": {
@@ -28124,7 +28121,7 @@
         "area": "1 817,83 км²",
         "population": "83 789",
         "economicallyActive": "36 262",    
-        "linkReg": "https://sp.sb.by/er_slutski",
+        "linkReg": "http://sp.sb.by/er_slutski",
         "regionGroup": "Минская область"
       },
       "geometry": {
@@ -35451,7 +35448,7 @@
         "area": "1 220 км²",
         "population": "8 232",
         "economicallyActive": "3 000",
-        "linkReg": "https://www.sb.by/articles/orientir-eksport-i-importozameshchenie.html",
+        "linkReg": "http://sp.sb.by/er_krasnopolskii",
         "regionGroup": "Могилевская область"
       },
       "geometry": {
@@ -35675,7 +35672,7 @@
         "area": "879 016 км²",
         "population": "11 955",
         "economicallyActive": "4 499",
-        "linkReg": "https://www.sb.by/articles/khlebnaya-zemlya-kruglyanskiy-rayon-primer-gramotnogo-balansa-mezhdu-prirodnym-potentsialom-i-sovrem.html",
+        "linkReg": "http://sp.sb.by/er_kruglianskii",
         "regionGroup": "Могилевская область"
       },
       "geometry": {
@@ -39663,7 +39660,7 @@
         "area": "1 251.4 км²",
         "population": "12 986",
         "economicallyActive": "5 171",
-        "linkReg": "https://www.sb.by/articles/prityazhenie-rodnoy-zemli-dubrovenskiy-rayon.html",
+        "linkReg": "http://sp.sb.by/er_dubrovenskii",
         "regionGroup": "Витебская область"
       },
       "geometry": {
